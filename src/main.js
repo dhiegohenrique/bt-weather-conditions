@@ -7,7 +7,7 @@ import 'vuetify/dist/vuetify.min.css'
 Vue.config.productionTip = false
 
 new Vue({
-    vuetify,
-    router,
-    render: h => h(App),
+  vuetify,
+  router,
+  render: h => h(App)
 }).$mount('#app')
