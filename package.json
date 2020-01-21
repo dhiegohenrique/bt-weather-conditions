@@ -40,5 +40,9 @@
     "browserslist": [
         "> 1%",
         "last 2 versions"
-    ]
+    ],
+    "engines": {
+        "node": ">=10.6.0 <11.0",
+        "npm": ">=6.1.0"
+    }
 }
