@@ -1,6 +1,8 @@
 export default {
   name: 'home',
-  mounted () {
-    // this.$root.$emit('showLoading')
+  data () {
+    return {
+      googleKey: process.env.VUE_APP_GOOGLE_KEY
+    }
   }
 }
