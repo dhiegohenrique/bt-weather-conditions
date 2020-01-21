@@ -1,3 +1,6 @@
 export default {
-    name: 'home',
+  name: 'home',
+  mounted () {
+    this.$root.$emit('showLoading')
+  }
 }
