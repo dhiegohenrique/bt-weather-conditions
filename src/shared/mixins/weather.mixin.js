@@ -35,7 +35,7 @@ const mixin = {
             weatherConditions = res.data
 
             let { list: items } = weatherConditions
-            items = items.slice(0, 6)
+            items = getWeatherByDays(items)
 
             const { city: { name, sunrise, sunset } } = weatherConditions
 
@@ -99,6 +99,37 @@ const getWeatherByGeolocation = (weatherConditions, lat, lon) => {
   }
 
   return weatherCondition
+}
+
+const getWeatherByDays = (items) => {
+  const dates = []
+  const weatherByDays = []
+  const maxDays = 6
+
+  for (let index = 0; index < items.length; index++) {
+    const item = items[index]
+    const { dt } = item
+    const date = moment.unix(dt).startOf('day').unix()
+
+    if (!dates.includes(date)) {
+      dates.push(date)
+    }
+
+    if (dates.length === maxDays) {
+      break
+    }
+  }
+
+  dates.forEach((date) => {
+    const item = items.find((item) => {
+      const { dt } = item
+      return moment.unix(dt).isSameOrAfter(moment.unix(date))
+    })
+
+    weatherByDays.push(item)
+  })
+
+  return weatherByDays
 }
 
 export default mixin
