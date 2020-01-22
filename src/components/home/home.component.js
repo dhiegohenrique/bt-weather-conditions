@@ -13,7 +13,8 @@ export default {
   },
   data () {
     return {
-      weatherConditions: null
+      weatherConditions: null,
+      currentWeather: null
     }
   },
   methods: {
@@ -22,9 +23,8 @@ export default {
         this.$root.$emit('showLoading')
         const geolocation = await this.getGeolocation('150+Humberto+de+Campos,88036-420')
         this.weatherConditions = await this.getWeatherConditions(geolocation.lat, geolocation.lon)
-
-        // eslint-disable-next-line no-console
-        console.log('res: ' + JSON.stringify(this.weatherConditions))
+        this.currentWeather = this.weatherConditions[0]
+        this.weatherConditions.splice(0, 1)
       } finally {
         this.$root.$emit('hideLoading')
       }

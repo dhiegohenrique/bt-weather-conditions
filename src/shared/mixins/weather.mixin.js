@@ -9,21 +9,21 @@ const mixin = {
   data () {
     return {
       openWeatherKey: process.env.VUE_APP_OPEN_WEATHER_KEY,
-      openWeatherUrl: 'http://api.openweathermap.org/data/2.5/weather?lat=%_lat_%&lon=%_lon_%&APPID=%_open_weather_key_%&units=metric&lang=pt'
+      openWeatherUrl: 'http://api.openweathermap.org/data/2.5/forecast?lat=%_lat_%&lon=%_lon_%&APPID=%_open_weather_key_%&units=metric&lang=pt'
     }
   },
   methods: {
     getWeatherConditions (lat, lon) {
       return new Promise((resolve, reject) => {
-        let weatherCondition
+        let weatherConditions
         if (store.state.weatherConditions.length) {
-          weatherCondition = getWeatherByGeolocation(store.state.weatherConditions, lat, lon)
+          weatherConditions = getWeatherByGeolocation(store.state.weatherConditions, lat, lon)
         }
 
-        if (weatherCondition) {
+        if (weatherConditions) {
           // eslint-disable-next-line no-console
-          console.log('tem: ' + JSON.stringify(weatherCondition))
-          return resolve(weatherCondition)
+          console.log('tem: ' + JSON.stringify(weatherConditions))
+          return resolve(weatherConditions)
         }
 
         let url = this.openWeatherUrl
@@ -32,26 +32,44 @@ const mixin = {
         url = url.replace('%_open_weather_key_%', this.openWeatherKey)
         this.requestGet(url)
           .then((res) => {
-            weatherCondition = res.data
-            // eslint-disable-next-line no-console
-            console.log('recebeu: ' + JSON.stringify(weatherCondition))
-            const weather = weatherCondition.weather[0]
+            weatherConditions = res.data
 
-            weather.icon = `http://openweathermap.org/img/wn/${weather.icon}@2x.png`
-            weatherCondition.weather[0] = weather
+            let { list: items } = weatherConditions
+            items = items.slice(0, 6)
+
+            const { city: { name, sunrise, sunset } } = weatherConditions
+
+            weatherConditions = items.map((item) => {
+              const { dt, main: { temp, temp_min: tempMin, temp_max: tempMax, pressure, humidity }, wind: { speed: wind } } = item
+              const weather = item.weather[0]
+              const { description, icon } = weather
+
+              item = {
+                name,
+                sunrise,
+                sunset,
+                date: moment.unix(dt),
+                search: {
+                  lat,
+                  lon
+                },
+                expirationDate: moment.unix(dt).endOf('hour'),
+                temp,
+                tempMin,
+                tempMax,
+                pressure,
+                humidity,
+                wind,
+                description,
+                icon: `http://openweathermap.org/img/wn/${icon}@2x.png`
+              }
+              return item
+            })
 
             // eslint-disable-next-line no-console
-            weatherCondition.expirationDate = moment.unix(weatherCondition.dt).endOf('hour')
-            weatherCondition.searchDate = moment().tz('America/Sao_Paulo')
-            weatherCondition.search = {
-              lat,
-              lon
-            }
-
-            // eslint-disable-next-line no-console
-            console.log('não tem, vai salvar: ' + JSON.stringify(weatherCondition))
-            store.dispatch('addWeatherConditions', weatherCondition)
-            resolve(weatherCondition)
+            console.log('não tem, vai salvar: ' + JSON.stringify(weatherConditions))
+            store.dispatch('addWeatherConditions', weatherConditions)
+            resolve(weatherConditions)
           })
           .catch((error) => {
             reject(error)
@@ -74,7 +92,8 @@ const getWeatherByGeolocation = (weatherConditions, lat, lon) => {
   const weatherCondition = weatherConditions[index]
   const currentDate = moment.unix(moment().unix())
 
-  if (currentDate.isAfter(weatherCondition.expirationDate)) {
+  const expirationDate = weatherConditions.expirationDate
+  if (currentDate.isAfter(expirationDate)) {
     store.dispatch('removeWeatherConditions', index)
     return null
   }
