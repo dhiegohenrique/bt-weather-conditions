@@ -22,9 +22,6 @@ const mixin = {
           formattedAddress += ` ${address[key]}`
         })
 
-        // eslint-disable-next-line no-console
-        console.log('formattedAddres: ' + formattedAddress)
-
         let url = this.geolocationUrl
         url = url.replace('%_address_%', formattedAddress)
         url = url.replace('%_google_key_%', this.googleKey)

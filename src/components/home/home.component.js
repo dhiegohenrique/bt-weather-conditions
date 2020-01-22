@@ -1,6 +1,7 @@
 import WeatherMixin from '@/shared/mixins/weather.mixin'
 import GeolocationMixin from '@/shared/mixins/geolocation.mixin'
 import WeatherCard from '@/components/weather-card/index'
+import AddressForm from '@/components/address-form/index'
 
 export default {
   name: 'home',
@@ -9,7 +10,8 @@ export default {
     GeolocationMixin
   ],
   components: {
-    WeatherCard
+    WeatherCard,
+    AddressForm
   },
   data () {
     return {

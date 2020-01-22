@@ -1,4 +1,6 @@
 <section class="home">
+  <address-form />
+
   <template>
     <v-row align="center">
       <v-col class="text-center" cols="12" sm="4">
@@ -8,8 +10,16 @@
       </v-col>
       <v-col class="text-center" cols="12" sm="4">
         <div class="my-2">
-          <weather-card :weatherConditions="currentWeather" v-if="currentWeather" :showCurrentDateHour="true"/>
+          <weather-card :weatherConditions="currentWeather" v-if="currentWeather" :showCurrentDateHour="true" />
         </div>
+      </v-col>
+    </v-row>
+  </template>
+
+  <template>
+    <v-row align="center" v-for="(weatherCondition, index) in weatherConditions" :key="index">
+      <v-col class="text-center" cols="12">
+        <address />
       </v-col>
     </v-row>
   </template>
