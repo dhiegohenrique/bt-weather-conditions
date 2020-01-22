@@ -13,8 +13,20 @@ const mixin = {
   methods: {
     getGeolocation (address) {
       return new Promise((resolve, reject) => {
+        const filteredKeys = Object.keys(address).filter((key) => {
+          return address[key]
+        })
+
+        let formattedAddress = ''
+        filteredKeys.forEach((key) => {
+          formattedAddress += ` ${address[key]}`
+        })
+
+        // eslint-disable-next-line no-console
+        console.log('formattedAddres: ' + formattedAddress)
+
         let url = this.geolocationUrl
-        url = url.replace('%_address_%', address)
+        url = url.replace('%_address_%', formattedAddress)
         url = url.replace('%_google_key_%', this.googleKey)
 
         this.requestGet(url)
