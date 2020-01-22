@@ -15,6 +15,7 @@
         "express": "^4.17.1",
         "vue": "^2.6.10",
         "vue-router": "^3.1.5",
+        "vue-toasted": "^1.1.27",
         "vuetify": "^2.2.4"
     },
     "devDependencies": {
