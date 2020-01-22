@@ -1,6 +1,6 @@
 import BaseMixin from './base.mixin'
 import { store } from '@/store/store'
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 const mixin = {
   mixins: [
@@ -33,7 +33,16 @@ const mixin = {
         this.requestGet(url)
           .then((res) => {
             weatherCondition = res.data
+            // eslint-disable-next-line no-console
+            console.log('recebeu: ' + JSON.stringify(weatherCondition))
+            const weather = weatherCondition.weather[0]
+
+            weather.icon = `http://openweathermap.org/img/wn/${weather.icon}@2x.png`
+            weatherCondition.weather[0] = weather
+
+            // eslint-disable-next-line no-console
             weatherCondition.expirationDate = moment.unix(weatherCondition.dt).endOf('hour')
+            weatherCondition.searchDate = moment().tz('America/Sao_Paulo')
             weatherCondition.search = {
               lat,
               lon
