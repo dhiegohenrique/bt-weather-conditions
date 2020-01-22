@@ -1,5 +1,6 @@
 import BaseMixin from './base.mixin'
 import { store } from '@/store/store'
+import moment from 'moment'
 
 const mixin = {
   mixins: [
@@ -17,11 +18,11 @@ const mixin = {
         let weatherCondition
         if (store.state.weatherConditions.length) {
           weatherCondition = getWeatherByGeolocation(store.state.weatherConditions, lat, lon)
-          // eslint-disable-next-line no-console
-          console.log('tem: ' + JSON.stringify(weatherCondition))
         }
 
         if (weatherCondition) {
+          // eslint-disable-next-line no-console
+          console.log('tem: ' + JSON.stringify(weatherCondition))
           return resolve(weatherCondition)
         }
 
@@ -32,6 +33,7 @@ const mixin = {
         this.requestGet(url)
           .then((res) => {
             weatherCondition = res.data
+            weatherCondition.expirationDate = moment.unix(weatherCondition.dt).endOf('hour')
             weatherCondition.search = {
               lat,
               lon
@@ -51,10 +53,24 @@ const mixin = {
 }
 
 const getWeatherByGeolocation = (weatherConditions, lat, lon) => {
-  return weatherConditions.find((weatherCondition) => {
+  const index = weatherConditions.findIndex((weatherCondition) => {
     const { search } = weatherCondition
     return search.lat === lat && search.lon === lon
   })
+
+  if (index === -1) {
+    return null
+  }
+
+  const weatherCondition = weatherConditions[index]
+  const currentDate = moment.unix(moment().unix())
+
+  if (currentDate.isAfter(weatherCondition.expirationDate)) {
+    store.dispatch('removeWeatherConditions', index)
+    return null
+  }
+
+  return weatherCondition
 }
 
 export default mixin

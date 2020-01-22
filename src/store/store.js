@@ -13,6 +13,9 @@ export const store = new Vuex.Store({
     },
     addWeatherConditions (state, weatherConditions) {
       state.weatherConditions.push(weatherConditions)
+    },
+    removeWeatherConditions (state, index) {
+      state.weatherConditions.splice(index, 1)
     }
   },
   actions: {
@@ -21,6 +24,9 @@ export const store = new Vuex.Store({
     },
     addWeatherConditions: (context, weatherConditions) => {
       context.commit('addWeatherConditions', weatherConditions)
+    },
+    removeWeatherConditions: (context, index) => {
+      context.commit('removeWeatherConditions', index)
     }
   }
 })
