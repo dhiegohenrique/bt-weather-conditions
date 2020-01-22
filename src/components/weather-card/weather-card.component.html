@@ -1,0 +1,82 @@
+<section class="weather-card">
+  <v-card class="mx-auto" max-width="400">
+    <v-list-item two-line>
+      <v-list-item-content>
+        <v-list-item-title class="headline">{{formattedWeatherConditions.name}}</v-list-item-title>
+        <v-list-item-subtitle>{{formattedWeatherConditions.searchDate}}</v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
+
+    <v-card-text>
+      <v-row align="center">
+        <v-col class="display-2" cols="6">
+          {{formattedWeatherConditions.main.temp}}&deg;C
+        </v-col>
+        <v-col cols="6">
+          <v-img :src="formattedWeatherConditions.weather[0].icon"
+            :lazy-src="formattedWeatherConditions.weather[0].icon">
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular indeterminate color="grey lighten-5" />
+              </v-row>
+            </template>
+          </v-img>
+        </v-col>
+      </v-row>
+      <v-row align="center">
+        <v-col class="display-1" cols="12">
+          {{formattedWeatherConditions.weather[0].description}}
+        </v-col>
+      </v-row>
+    </v-card-text>
+
+    <v-list-item>
+      <v-list-item>
+        Temperatura mínima
+      </v-list-item>
+      <v-list-item-subtitle>{{formattedWeatherConditions.main.temp_min}}&deg;C</v-list-item-subtitle>
+    </v-list-item>
+
+    <v-list-item>
+      <v-list-item>
+        Temperatura máxima
+      </v-list-item>
+      <v-list-item-subtitle>{{formattedWeatherConditions.main.temp_max}}&deg;C</v-list-item-subtitle>
+    </v-list-item>
+
+    <v-list-item>
+      <v-list-item>
+        Vento
+      </v-list-item>
+      <v-list-item-subtitle>{{formattedWeatherConditions.wind.speed}} m/s</v-list-item-subtitle>
+    </v-list-item>
+
+    <v-list-item>
+      <v-list-item>
+        Pressão
+      </v-list-item>
+      <v-list-item-subtitle>{{formattedWeatherConditions.main.pressure}} hPa</v-list-item-subtitle>
+    </v-list-item>
+
+    <v-list-item>
+      <v-list-item>
+        Humidade
+      </v-list-item>
+      <v-list-item-subtitle>{{formattedWeatherConditions.main.humidity}}%</v-list-item-subtitle>
+    </v-list-item>
+
+    <v-list-item>
+      <v-list-item>
+        Nascer do sol
+      </v-list-item>
+      <v-list-item-subtitle>{{formattedWeatherConditions.sys.sunrise}}h</v-list-item-subtitle>
+    </v-list-item>
+
+    <v-list-item>
+      <v-list-item>
+        Pôr do sol
+      </v-list-item>
+      <v-list-item-subtitle>{{formattedWeatherConditions.sys.sunset}}h</v-list-item-subtitle>
+    </v-list-item>
+  </v-card>
+</section>
