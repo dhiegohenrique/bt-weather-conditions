@@ -12,12 +12,10 @@ export default {
       try {
         this.$root.$emit('showLoading')
         const geolocation = await this.getGeolocation('150+Humberto+de+Campos,88036-420')
-        // eslint-disable-next-line no-console
-        console.log('maria: ' + JSON.stringify(geolocation))
-        const res = await this.getWeather('-27.589344', '-48.520679')
+        const weatherConditions = await this.getWeatherConditions(geolocation.lat, geolocation.lon)
 
         // eslint-disable-next-line no-console
-        console.log('res: ' + JSON.stringify(res.data))
+        console.log('res: ' + JSON.stringify(weatherConditions))
       } finally {
         this.$root.$emit('hideLoading')
       }
