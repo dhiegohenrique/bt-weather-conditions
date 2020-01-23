@@ -20,23 +20,23 @@
   <v-form>
     <v-row no-gutters>
       <v-col cols="9">
-        <v-text-field v-model="street" label="Rua" maxlength="50" />
+        <v-text-field v-model="street" label="Rua" maxlength="50" @keyup.enter="search"/>
       </v-col>
       <v-col cols="3">
-        <v-text-field v-model="number" label="Número" v-mask="'#####'" />
+        <v-text-field v-model="number" label="Número" v-mask="'#####'" @keyup.enter="search"/>
       </v-col>
     </v-row>
     <v-row no-gutters>
       <v-col cols="9">
-        <v-text-field v-model="neighborhood" label="Bairro" maxlength="50" />
+        <v-text-field v-model="neighborhood" label="Bairro" maxlength="50" @keyup.enter="search"/>
       </v-col>
       <v-col cols="3">
-        <v-text-field v-model="cep" label="CEP" v-mask="'#####-###'" />
+        <v-text-field v-model="cep" label="CEP" v-mask="'#####-###'" @keyup.enter="search"/>
       </v-col>
     </v-row>
     <v-row no-gutters>
       <v-col cols="9">
-        <v-text-field v-model="city" label="Cidade" maxlength="50" />
+        <v-text-field v-model="city" label="Cidade" maxlength="50" @keyup.enter="search"/>
       </v-col>
       <v-col cols="3">
         <select-search title="Estado" :maxLength="2" :minCharSearch="1" :items="stateAcronyms" @selectItem="selectState"
@@ -47,7 +47,7 @@
 
   <v-row>
     <v-col cols="6" class="text-right">
-      <v-btn color="primary" @click="search" :disabled="!street && !number && !neighborhood && !cep && !city && state">
+      <v-btn color="primary" @click="search" :disabled="!street && !number && !neighborhood && !cep && !city && !state">
         <v-icon>search</v-icon>
         Buscar
       </v-btn>
