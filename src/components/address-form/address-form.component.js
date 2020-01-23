@@ -23,19 +23,25 @@ export default {
       cep: '',
       city: '',
       state: '',
-      stateAcronyms: []
+      stateAcronyms: [],
+      hasGeolocation: true
     }
   },
   mounted () {
     this.stateAcronyms = this.getStateAcronyms()
+    this.hasGeolocation = navigator.geolocation !== null
   },
   methods: {
     selectState (state) {
       this.state = state.toUpperCase()
     },
-    getLocation () {
-      // eslint-disable-next-line no-console
-      console.log('obter localização')
+    searchLocation () {
+      this.$root.$emit('showLoading')
+      navigator.geolocation.getCurrentPosition((position) => {
+        const geolocation = getLocation(position)
+        this.$root.$emit('hideLoading')
+        this.$emit('setGeolocation', geolocation)
+      })
     },
     async search () {
       try {
@@ -50,15 +56,10 @@ export default {
           state: this.state
         }
 
-        // eslint-disable-next-line no-console
-        console.log('buscar: ' + JSON.stringify(address))
-
         const geolocation = await this.getGeolocation(address)
         if (!geolocation) {
           this.$root.$emit('showToast', 'Não foi encontrada uma localização com os dados informados.')
         } else {
-          // eslint-disable-next-line no-console
-          console.log('geolocation: ' + JSON.stringify(geolocation))
           this.$emit('setGeolocation', geolocation)
         }
       } finally {
@@ -75,5 +76,13 @@ export default {
       this.$refs['select-state'].clear()
       this.$emit('clear')
     }
+  }
+}
+
+const getLocation = (position) => {
+  const { latitude: lat, longitude: lon } = position.coords
+  return {
+    lat,
+    lon
   }
 }
