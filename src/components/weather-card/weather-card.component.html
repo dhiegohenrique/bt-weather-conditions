@@ -1,6 +1,6 @@
 <section class="weather-card">
-  <v-card class="mx-auto" max-width="400">
-    <v-list-item two-line>
+  <v-card class="mx-auto" max-width="400" light>
+    <v-list-item two-line light>
       <v-list-item-content>
         <v-list-item-title class="headline">{{formattedWeatherConditions.name}}</v-list-item-title>
         <v-list-item-subtitle>
@@ -36,50 +36,50 @@
       </v-row>
     </v-card-text>
 
-    <v-list-item>
-      <v-list-item>
+    <v-list-item light>
+      <v-list-item light>
         Temperatura mínima
       </v-list-item>
       <v-list-item-subtitle>{{formattedWeatherConditions.tempMin}}&deg;C</v-list-item-subtitle>
     </v-list-item>
 
-    <v-list-item>
-      <v-list-item>
+    <v-list-item light>
+      <v-list-item light>
         Temperatura máxima
       </v-list-item>
       <v-list-item-subtitle>{{formattedWeatherConditions.tempMax}}&deg;C</v-list-item-subtitle>
     </v-list-item>
 
-    <v-list-item>
-      <v-list-item>
+    <v-list-item light>
+      <v-list-item light>
         Vento
       </v-list-item>
       <v-list-item-subtitle>{{formattedWeatherConditions.wind}} m/s</v-list-item-subtitle>
     </v-list-item>
 
-    <v-list-item>
-      <v-list-item>
+    <v-list-item light>
+      <v-list-item light>
         Pressão
       </v-list-item>
       <v-list-item-subtitle>{{formattedWeatherConditions.pressure}} hPa</v-list-item-subtitle>
     </v-list-item>
 
-    <v-list-item>
-      <v-list-item>
+    <v-list-item light>
+      <v-list-item light>
         Humidade
       </v-list-item>
       <v-list-item-subtitle>{{formattedWeatherConditions.humidity}}%</v-list-item-subtitle>
     </v-list-item>
 
-    <v-list-item>
-      <v-list-item>
+    <v-list-item light>
+      <v-list-item light>
         Nascer do sol
       </v-list-item>
       <v-list-item-subtitle>{{formattedWeatherConditions.sunrise}}h</v-list-item-subtitle>
     </v-list-item>
 
-    <v-list-item>
-      <v-list-item>
+    <v-list-item light>
+      <v-list-item light>
         Pôr do sol
       </v-list-item>
       <v-list-item-subtitle>{{formattedWeatherConditions.sunset}}h</v-list-item-subtitle>
