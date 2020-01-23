@@ -25,13 +25,6 @@ export default {
       try {
         this.$root.$emit('showLoading')
         this.weatherConditions = await this.getWeatherConditions(geolocation.lat, geolocation.lon)
-        this.currentWeather = this.weatherConditions[0]
-        this.weatherConditions.splice(0, 1)
-
-        const weatherCards = this.$el.getElementsByClassName('weather-card')
-        if (weatherCards && weatherCards.length) {
-          weatherCards[0].scrollIntoView()
-        }
       } finally {
         this.$root.$emit('hideLoading')
       }

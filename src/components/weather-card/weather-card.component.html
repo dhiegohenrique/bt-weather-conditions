@@ -4,9 +4,7 @@
       <v-list-item-content>
         <v-list-item-title class="headline">{{formattedWeatherConditions.name}}</v-list-item-title>
         <v-list-item-subtitle>
-          <template v-if="showCurrentDateHour">
-            {{currentDateHour}}
-          </template>
+          <span v-if="showCurrentDateHour" v-html="currentDateHour" />
           <template v-else>
             {{formattedWeatherConditions.date}}
           </template>
