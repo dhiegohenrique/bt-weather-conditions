@@ -68,7 +68,16 @@ const mixin = {
 
             // eslint-disable-next-line no-console
             console.log('não tem, vai salvar: ' + JSON.stringify(weatherConditions))
-            store.dispatch('addWeatherConditions', weatherConditions)
+
+            const item = {
+              search: {
+                lat,
+                lon
+              },
+              items: weatherConditions
+            }
+
+            store.dispatch('addWeatherConditions', item)
             resolve(weatherConditions)
           })
           .catch((error) => {
@@ -90,15 +99,16 @@ const getWeatherByGeolocation = (weatherConditions, lat, lon) => {
   }
 
   const weatherCondition = weatherConditions[index]
+  const firstItem = weatherCondition.items[0]
   const currentDate = moment.unix(moment().unix())
 
-  const expirationDate = weatherConditions.expirationDate
+  const expirationDate = firstItem.expirationDate
   if (currentDate.isAfter(expirationDate)) {
     store.dispatch('removeWeatherConditions', index)
     return null
   }
 
-  return weatherCondition
+  return weatherCondition.items
 }
 
 const getWeatherByDays = (items) => {
