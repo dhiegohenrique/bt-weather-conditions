@@ -1,6 +1,7 @@
 import BaseMixin from './base.mixin'
 import { store } from '@/store/store'
 import moment from 'moment-timezone'
+import Vue from 'vue'
 
 const mixin = {
   mixins: [
@@ -18,12 +19,11 @@ const mixin = {
         let weatherConditions
         if (store.state.weatherConditions.length) {
           weatherConditions = getWeatherByGeolocation(store.state.weatherConditions, lat, lon)
-        }
-
-        if (weatherConditions) {
-          // eslint-disable-next-line no-console
-          console.log('tem: ' + JSON.stringify(weatherConditions))
-          return resolve(weatherConditions)
+          if (weatherConditions) {
+            // eslint-disable-next-line no-console
+            console.log('tem getWeatherConditions: ' + JSON.stringify(weatherConditions))
+            return resolve(Vue._.cloneDeep(weatherConditions))
+          }
         }
 
         let url = this.openWeatherUrl
