@@ -15,20 +15,31 @@ export default {
   },
   data () {
     return {
-      weatherConditions: null,
-      currentWeather: null
+      weatherConditions: [],
+      currentWeather: null,
+      imgRain: require('@/assets/rain.png')
     }
   },
   methods: {
     async setGeolocation (geolocation) {
       try {
         this.$root.$emit('showLoading')
-        this.weatherConditions = await this.getWeatherConditions(geolocation.lat, geolocation.lon)
+        const res = await this.getWeatherConditions(geolocation.lat, geolocation.lon)
+        this.weatherConditions = this._.cloneDeep(res)
         this.currentWeather = this.weatherConditions[0]
         this.weatherConditions.splice(0, 1)
+
+        const weatherCards = this.$el.getElementsByClassName('weather-card')
+        if (weatherCards && weatherCards.length) {
+          weatherCards[0].scrollIntoView()
+        }
       } finally {
         this.$root.$emit('hideLoading')
       }
+    },
+    clear () {
+      this.currentWeather = null
+      this.weatherConditions = []
     }
   }
 }
