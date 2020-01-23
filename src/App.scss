@@ -13,5 +13,20 @@
 }
 
 .toast {
-  font-family: 'Roboto', 'Helvetica', 'Arial', 'sans-serif';
+  font-family: "Roboto", "Helvetica", "Arial", "sans-serif";
+}
+
+.logo {
+  span {
+    color: white;
+    font-size: 40px;
+    text-transform: uppercase;
+    text-shadow: 4px 4px 5px rgba(112, 150, 212, 1);
+  }
+
+  .v-responsive__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
