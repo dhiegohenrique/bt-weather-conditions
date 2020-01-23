@@ -14,6 +14,10 @@ export default {
     showCurrentDateHour: {
       type: Boolean,
       default: false
+    },
+    scrollToTop: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -28,6 +32,12 @@ export default {
       return this.getFormattedDateHour(moment().tz('America/Sao_Paulo'))
     }
   },
-  methods: {
+  mounted () {
+    if (this.scrollToTop) {
+      const el = document.querySelector('.weather-card')
+      if (el) {
+        el.scrollIntoView()
+      }
+    }
   }
 }
