@@ -20,20 +20,9 @@ export default {
     }
   },
   methods: {
-    async search () {
+    async setGeolocation (geolocation) {
       try {
         this.$root.$emit('showLoading')
-
-        const address = {
-          street: 'Humberto de Campos',
-          number: '150',
-          neighborhood: 'Trindade',
-          cep: '88036420',
-          city: 'Florianopolis',
-          state: 'SC'
-        }
-
-        const geolocation = await this.getGeolocation(address)
         this.weatherConditions = await this.getWeatherConditions(geolocation.lat, geolocation.lon)
         this.currentWeather = this.weatherConditions[0]
         this.weatherConditions.splice(0, 1)

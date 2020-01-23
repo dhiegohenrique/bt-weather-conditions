@@ -1,16 +1,12 @@
 <section class="home">
-  <address-form />
+  <address-form @setGeolocation="setGeolocation" />
 
   <template>
     <v-row align="center">
       <v-col class="text-center" cols="12" sm="4">
         <div class="my-2">
-          <v-btn color="primary" @click="search">Buscar</v-btn>
-        </div>
-      </v-col>
-      <v-col class="text-center" cols="12" sm="4">
-        <div class="my-2">
-          <weather-card :weatherConditions="currentWeather" v-if="currentWeather" :showCurrentDateHour="true" id="current-weather" />
+          <weather-card :weatherConditions="currentWeather" v-if="currentWeather" :showCurrentDateHour="true"
+            id="current-weather" />
         </div>
       </v-col>
     </v-row>
