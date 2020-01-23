@@ -1,8 +1,7 @@
 <section class="home">
   <v-row align="center" justify="center">
     <v-col class="text-center logo" cols="12">
-      <v-img :src="imgRain" :lazy-src="imgRain" aspect-ratio="1" class="grey lighten-2 elevation-3"
-        max-height="300">
+      <v-img :src="imgRain" :lazy-src="imgRain" aspect-ratio="1" class="grey lighten-2 elevation-3" max-height="300">
         <template v-slot:placeholder>
           <v-row class="fill-height ma-0" align="center" justify="center">
             <v-progress-circular indeterminate color="grey lighten-5" />
@@ -28,9 +27,12 @@
     <v-col cols="12" class="text-center next-days">
       <span class="headline">Próximos dias:</span>
     </v-col>
-    <v-col class="text-center" v-for="(weatherCondition, index) in weatherConditions" :key="'weatherCondition'+index"
-      :cols="index > 2 ? '6' : '4'">
-      <weather-card :weatherConditions="weatherCondition" v-if="currentWeather" />
+    <v-col class="text-center carousel" cols="12">
+      <v-carousel hide-delimiters height="750">
+        <v-carousel-item v-for="(weatherCondition, index) in weatherConditions" :key="'weatherCondition'+index">
+          <weather-card :weatherConditions="weatherCondition" />
+        </v-carousel-item>
+      </v-carousel>
     </v-col>
   </v-row>
 </section>
