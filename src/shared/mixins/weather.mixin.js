@@ -61,7 +61,7 @@ const mixin = {
                 humidity,
                 wind,
                 description,
-                icon: `http://openweathermap.org/img/wn/${icon}@2x.png`
+                icon: require(`@/assets/icons/${icon}@2x.png`)
               }
               return item
             })
