@@ -21,7 +21,7 @@
         <v-text-field v-model="city" label="Cidade" maxlength="50" />
       </v-col>
       <v-col xs="6" sm="6" md="2" lg="2" xl="2">
-        Estado
+        <select-search title="Estado" :maxLength="2" :minCharSearch="1" :items="stateAcronyms" @selectItem="selectState"/>
       </v-col>
     </v-row>
   </v-form>

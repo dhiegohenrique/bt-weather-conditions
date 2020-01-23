@@ -1,0 +1,21 @@
+<section class="select-search" ref="select-search">
+  <v-row no-gutters class="fill-height ma-0">
+    <v-col cols="12">
+      <v-text-field :label="title" v-model="searchValue" :maxlength="maxLength" @input="filterItem"
+        @blur="validateItem" />
+    </v-col>
+    <v-col cols="12">
+      <v-card :elevation="4" v-if="filteredItems.length && showPopup">
+        <v-list>
+          <v-list-item-group color="primary">
+            <v-list-item v-for="(item, index) in filteredItems" :key="index" @click="selectItem(item)">
+              <v-list-item-content>
+                <v-list-item-title v-text="item" />
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-card>
+    </v-col>
+  </v-row>
+</section>
