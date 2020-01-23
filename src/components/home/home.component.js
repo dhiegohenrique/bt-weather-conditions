@@ -24,8 +24,7 @@ export default {
     async setGeolocation (geolocation) {
       try {
         this.$root.$emit('showLoading')
-        const res = await this.getWeatherConditions(geolocation.lat, geolocation.lon)
-        this.weatherConditions = this._.cloneDeep(res)
+        this.weatherConditions = await this.getWeatherConditions(geolocation.lat, geolocation.lon)
         this.currentWeather = this.weatherConditions[0]
         this.weatherConditions.splice(0, 1)
 
