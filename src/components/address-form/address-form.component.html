@@ -1,28 +1,56 @@
 <section class="address-form">
+  <v-row>
+    <v-col cols="12" class="text-center">
+      <v-btn color="primary" @click="getLocation">
+        <v-icon>location_searching</v-icon>
+        Obter localização
+      </v-btn>
+    </v-col>
+    <v-col cols="12" class="text-center">
+      Ou preencha os campos:
+    </v-col>
+  </v-row>
+
   <v-form>
-    <v-row no-gutters class="fill-height ma-0" align="center" justify="space-between">
-      <v-col xs="12" sm="6" md="6" lg="6" xl="6">
+    <v-row no-gutters>
+      <v-col cols="9">
         <v-text-field v-model="street" label="Rua" maxlength="50" />
       </v-col>
-      <v-col xs="6" sm="6" md="2" lg="2" xl="2">
+      <v-col cols="3">
         <v-text-field v-model="number" label="Número" v-mask="'#####'" />
       </v-col>
     </v-row>
-    <v-row no-gutters class="fill-height ma-0" align="center" justify="space-between">
-      <v-col xs="12" sm="6" md="6" lg="6" xl="6">
+    <v-row no-gutters>
+      <v-col cols="9">
         <v-text-field v-model="neighborhood" label="Bairro" maxlength="50" />
       </v-col>
-      <v-col xs="6" sm="6" md="2" lg="2" xl="2">
+      <v-col cols="3">
         <v-text-field v-model="cep" label="CEP" v-mask="'#####-###'" />
       </v-col>
     </v-row>
-    <v-row no-gutters class="fill-height ma-0" align="center" justify="space-between">
-      <v-col xs="12" sm="6" md="6" lg="6" xl="6">
+    <v-row no-gutters>
+      <v-col cols="9">
         <v-text-field v-model="city" label="Cidade" maxlength="50" />
       </v-col>
-      <v-col xs="6" sm="6" md="2" lg="2" xl="2">
-        <select-search title="Estado" :maxLength="2" :minCharSearch="1" :items="stateAcronyms" @selectItem="selectState"/>
+      <v-col cols="3">
+        <select-search title="Estado" :maxLength="2" :minCharSearch="1" :items="stateAcronyms" @selectItem="selectState"
+          :hasValidateItem="true" ref="select-state" />
       </v-col>
     </v-row>
   </v-form>
+
+  <v-row>
+    <v-col cols="6" class="text-right">
+      <v-btn color="primary" @click="search">
+        <v-icon>search</v-icon>
+        Buscar
+      </v-btn>
+    </v-col>
+    <v-col cols="6" class="text-left">
+      <v-btn color="error" @click="clear">
+        <v-icon>clear</v-icon>
+        Limpar
+      </v-btn>
+    </v-col>
+  </v-row>
 </section>
