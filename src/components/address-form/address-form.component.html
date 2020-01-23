@@ -1,13 +1,19 @@
 <section class="address-form">
   <v-row>
-    <v-col cols="12" class="text-center">
-      <v-btn color="primary" @click="getLocation">
+    <v-col cols="12" class="text-center" v-if="hasGeolocation">
+      <v-btn color="primary" @click="searchLocation">
         <v-icon>location_searching</v-icon>
         Obter localização
       </v-btn>
     </v-col>
     <v-col cols="12" class="text-center">
-      Ou preencha os campos:
+      <template v-if="hasGeolocation">
+        Ou preencha
+      </template>
+      <template v-else>
+        Preencha
+      </template>
+      os campos:
     </v-col>
   </v-row>
 
