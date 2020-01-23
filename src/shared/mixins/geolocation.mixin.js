@@ -19,7 +19,12 @@ const mixin = {
 
         let formattedAddress = ''
         filteredKeys.forEach((key) => {
-          formattedAddress += ` ${address[key]}`
+          let value = address[key]
+          if (key === 'cep') {
+            value = value.replace(/[^0-9.]/ig, '')
+          }
+
+          formattedAddress += ` ${value}`
         })
 
         let url = this.geolocationUrl
