@@ -1,4 +1,6 @@
 import BaseMixin from './base.mixin'
+import { store } from '@/store/store'
+import Vue from 'vue'
 
 const mixin = {
   mixins: [
@@ -13,19 +15,34 @@ const mixin = {
   methods: {
     getGeolocation (address) {
       return new Promise((resolve, reject) => {
-        const filteredKeys = Object.keys(address).filter((key) => {
-          return address[key]
-        })
-
-        let formattedAddress = ''
-        filteredKeys.forEach((key) => {
-          let value = address[key]
-          if (key === 'cep') {
-            value = value.replace(/[^0-9.]/ig, '')
+        // eslint-disable-next-line no-console
+        console.log('entrou aqui1: ' + JSON.stringify(address))
+        Object.keys(address).forEach((key) => {
+          if (!address[key]) {
+            delete address[key]
           }
-
-          formattedAddress += ` ${value}`
         })
+
+        // eslint-disable-next-line no-console
+        console.log('entrou aqui2: ' + JSON.stringify(address))
+
+        if (store.state.geoLocations.length) {
+          const geolocation = getGeolocationByAddress(store.state.geoLocations, address)
+
+          if (geolocation) {
+            // eslint-disable-next-line no-console
+            console.log('tem geolocation: ' + JSON.stringify(geolocation))
+            const { lat, lon } = geolocation
+            return resolve({
+              lat,
+              lon
+            })
+          }
+        }
+
+        const formattedAddress = Object.values(address).join(' ')
+        // eslint-disable-next-line no-console
+        console.log('formattedAddress: ' + formattedAddress)
 
         let url = this.geolocationUrl
         url = url.replace('%_address_%', formattedAddress)
@@ -41,6 +58,17 @@ const mixin = {
 
             const { geometry } = results[0]
             const { location: { lat, lng: lon } } = geometry
+
+            const geolocation = {
+              address,
+              lat,
+              lon
+            }
+
+            // eslint-disable-next-line no-console
+            console.log('não tem geolocation: ' + JSON.stringify(geolocation))
+
+            store.dispatch('addGeolocation', geolocation)
             resolve({
               lat,
               lon
@@ -52,6 +80,15 @@ const mixin = {
       })
     }
   }
+}
+
+const getGeolocationByAddress = (geolocations, address) => {
+  const geolocation = geolocations.find((geolocation) => {
+    const { address: geolocationAddress } = geolocation
+    return Vue._.isEqual(geolocationAddress, address)
+  })
+
+  return geolocation
 }
 
 export default mixin
