@@ -16,6 +16,7 @@
         "moment": "^2.24.0",
         "moment-timezone": "^0.5.27",
         "vue": "^2.6.10",
+        "vue-lodash": "^2.0.2",
         "vue-router": "^3.1.5",
         "vue-the-mask": "^0.11.1",
         "vue-toasted": "^1.1.27",
