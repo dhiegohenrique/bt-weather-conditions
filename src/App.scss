@@ -11,3 +11,72 @@
     text-align: center;
   }
 }
+
+.toast {
+  font-family: "Roboto", "Helvetica", "Arial", "sans-serif";
+}
+
+.logo {
+  span {
+    color: white;
+    font-size: 40px;
+    text-transform: uppercase;
+    text-shadow: 4px 4px 5px rgba(112, 150, 212, 1);
+  }
+
+  .v-responsive__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  //xs
+
+  .logo {
+    span {
+      font-size: 25px;
+    }
+  }
+}
+
+@media (min-width: 600px) {
+  //sm
+
+  .logo {
+    span {
+      font-size: 25px;
+    }
+  }
+}
+
+@media (min-width: 960px) {
+  //md
+
+  .logo {
+    span {
+      font-size: 40px;
+    }
+  }
+}
+
+@media (min-width: 1264px) {
+  //lg
+
+  .logo {
+    span {
+      font-size: 40px;
+    }
+  }
+}
+
+@media (min-width: 1904px) {
+  //xl
+
+  .logo {
+    span {
+      font-size: 40px;
+    }
+  }
+}

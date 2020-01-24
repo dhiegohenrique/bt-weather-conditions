@@ -1,0 +1,43 @@
+<section class="weather-card">
+  <v-card class="mx-auto" max-width="400" light >
+    <v-list-item two-line light>
+      <v-list-item-content>
+        <v-list-item-title class="headline">{{weatherConditions.name}}</v-list-item-title>
+        <v-list-item-subtitle>
+          <span v-if="showCurrentDateHour" v-html="currentDateHour" />
+          <template v-else>
+            {{weatherConditions.date}}
+          </template>
+        </v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
+
+    <v-card-text>
+      <v-row align="center" no-gutters>
+        <v-col class="display-2 temp" cols="6">{{weatherConditions.temp}}&deg;C</v-col>
+        <v-col cols="6">
+          <v-img :src="weatherConditions.icon" :lazy-src="weatherConditions.icon">
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center" no-gutters>
+                <v-progress-circular indeterminate color="primary" />
+              </v-row>
+            </template>
+          </v-img>
+        </v-col>
+      </v-row>
+      <v-row align="center">
+        <v-col class="display-1" cols="12">
+          {{weatherConditions.description}}
+        </v-col>
+      </v-row>
+    </v-card-text>
+
+    <v-list-item light v-for="(field, index) in fields" :key="'field'+index" class="fields"
+      :class="{'background-color': (index % 2 === 0)}">
+      <v-list-item light class="text-left" :class="{'background-color': (index % 2 === 0)}">
+        {{field.label}}
+      </v-list-item>
+      <v-list-item-subtitle class="text-right" :class="{'background-color': (index % 2 === 0)}" v-html="field.value" />
+    </v-list-item>
+  </v-card>
+</section>
