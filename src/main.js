@@ -15,5 +15,9 @@ new Vue({
   vuetify,
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  beforeMount () {
+    const name = this.$vuetify.breakpoint.name
+    Vue.prototype.isMobile = name === 'xs' || name === 'sm'
+  }
 }).$mount('#app')

@@ -18,9 +18,9 @@
 
   <v-row align="center" v-if="weatherConditions.length">
     <v-col class="text-center carousel" cols="12">
-      <v-carousel hide-delimiters height="750">
+      <v-carousel hide-delimiters height="900">
         <v-carousel-item v-for="(weatherCondition, index) in weatherConditions" :key="'weatherCondition'+index">
-          <weather-card :weatherConditions="weatherCondition" :showCurrentDateHour="index === 0" />
+          <weather-card :weatherConditions="weatherCondition" :showCurrentDateHour="index === 0" :ref="'weatherCondition'+index"/>
         </v-carousel-item>
       </v-carousel>
     </v-col>

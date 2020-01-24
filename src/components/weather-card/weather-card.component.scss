@@ -1,3 +1,63 @@
 .weather-card {
-  margin-top: 20px;
+  .v-list-item {
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    .text-left {
+      padding-left: 10px;
+    }
+
+    .text-right {
+      padding-right: 10px;
+    }
+  }
+
+  .v-card {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .background-color {
+    background: #eeeeee;
+  }
+
+  @media (max-width: 600px) {
+    //xs
+
+    .temp {
+      font-size: 30px !important;
+    }
+  }
+
+  @media (min-width: 600px) {
+    //sm
+
+    .temp {
+      font-size: 30px !important;
+    }
+  }
+
+  @media (min-width: 960px) {
+    //md
+
+    .temp {
+      font-size: 48px !important;
+    }
+  }
+
+  @media (min-width: 1264px) {
+    //lg
+
+    .temp {
+      font-size: 48px !important;
+    }
+  }
+
+  @media (min-width: 1904px) {
+    //xl
+
+    .temp {
+      font-size: 48px !important;
+    }
+  }
 }

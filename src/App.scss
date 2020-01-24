@@ -30,3 +30,53 @@
     justify-content: center;
   }
 }
+
+@media (max-width: 600px) {
+  //xs
+
+  .logo {
+    span {
+      font-size: 25px;
+    }
+  }
+}
+
+@media (min-width: 600px) {
+  //sm
+
+  .logo {
+    span {
+      font-size: 25px;
+    }
+  }
+}
+
+@media (min-width: 960px) {
+  //md
+
+  .logo {
+    span {
+      font-size: 40px;
+    }
+  }
+}
+
+@media (min-width: 1264px) {
+  //lg
+
+  .logo {
+    span {
+      font-size: 40px;
+    }
+  }
+}
+
+@media (min-width: 1904px) {
+  //xl
+
+  .logo {
+    span {
+      font-size: 40px;
+    }
+  }
+}
