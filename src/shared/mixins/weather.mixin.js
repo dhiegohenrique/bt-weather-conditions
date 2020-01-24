@@ -20,8 +20,6 @@ const mixin = {
         if (store.state.weatherConditions.length) {
           weatherConditions = getWeatherByGeolocation(store.state.weatherConditions, lat, lon)
           if (weatherConditions) {
-            // eslint-disable-next-line no-console
-            console.log('tem getWeatherConditions: ' + JSON.stringify(weatherConditions))
             return resolve(Vue._.cloneDeep(weatherConditions))
           }
         }
@@ -65,9 +63,6 @@ const mixin = {
               }
               return item
             })
-
-            // eslint-disable-next-line no-console
-            console.log('não tem, vai salvar: ' + JSON.stringify(weatherConditions))
 
             const item = {
               search: {
