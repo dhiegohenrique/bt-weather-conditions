@@ -77,10 +77,5 @@ export default {
     this.fields.forEach((field) => {
       field.value = `${this.weatherConditions[field.key]}${field.suffix}`
     })
-
-    const el = document.querySelector('.weather-card')
-    if (el) {
-      el.scrollIntoView()
-    }
   }
 }
