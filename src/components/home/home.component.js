@@ -2,6 +2,7 @@ import WeatherMixin from '@/shared/mixins/weather.mixin'
 import GeolocationMixin from '@/shared/mixins/geolocation.mixin'
 import WeatherCard from '@/components/weather-card/index'
 import AddressForm from '@/components/address-form/index'
+import VueScrollTo from 'vue-scrollto'
 
 export default {
   name: 'home',
@@ -24,10 +25,8 @@ export default {
     async setGeolocation (geolocation) {
       this.weatherConditions = await this.getWeatherConditions(geolocation.lat, geolocation.lon)
 
-      const el = document.querySelector('.weather-card')
-      if (el) {
-        el.scrollIntoView()
-      }
+      const rowWeather = this.$refs['row-weather']
+      VueScrollTo.scrollTo(rowWeather)
       this.$root.$emit('hideLoading')
     },
     clear () {
