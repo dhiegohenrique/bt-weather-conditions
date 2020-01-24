@@ -12,7 +12,8 @@ export const store = new Vuex.Store({
   plugins: [vuexPersist.plugin],
   state: {
     geoLocations: [],
-    weatherConditions: []
+    weatherConditions: [],
+    address: []
   },
   mutations: {
     addGeolocation (state, geoLocation) {
@@ -23,6 +24,9 @@ export const store = new Vuex.Store({
     },
     removeWeatherConditions (state, index) {
       state.weatherConditions.splice(index, 1)
+    },
+    addAddress (state, address) {
+      state.address.push(address)
     }
   },
   actions: {
@@ -34,6 +38,9 @@ export const store = new Vuex.Store({
     },
     removeWeatherConditions: (context, index) => {
       context.commit('removeWeatherConditions', index)
+    },
+    addAddress: (context, address) => {
+      context.commit('addAddress', address)
     }
   }
 })

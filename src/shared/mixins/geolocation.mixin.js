@@ -57,6 +57,7 @@ const mixin = {
             }
 
             store.dispatch('addGeolocation', geolocation)
+            store.dispatch('addAddress', address)
             resolve({
               lat,
               lon

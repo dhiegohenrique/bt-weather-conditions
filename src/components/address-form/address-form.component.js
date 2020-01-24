@@ -2,6 +2,7 @@ import { mask } from 'vue-the-mask'
 import SelectSearch from '@/components/select-search/index'
 import StateMixin from '@/shared/mixins/state.mixin'
 import GeolocationMixin from '@/shared/mixins/geolocation.mixin'
+import AddressMixin from '@/shared/mixins/address.mixin'
 
 export default {
   name: 'address-form',
@@ -10,7 +11,8 @@ export default {
   },
   mixins: [
     StateMixin,
-    GeolocationMixin
+    GeolocationMixin,
+    AddressMixin
   ],
   components: {
     SelectSearch
@@ -24,12 +26,22 @@ export default {
       city: '',
       state: '',
       stateAcronyms: [],
-      hasGeolocation: true
+      hasGeolocation: true,
+      streetHistory: [],
+      numberHistory: [],
+      neighborhoodHistory: [],
+      cepHistory: [],
+      cityHistory: []
     }
   },
   mounted () {
     this.stateAcronyms = this.getStateAcronyms()
     this.hasGeolocation = navigator.geolocation !== null
+    this.streetHistory = this.getStreetHistory()
+    this.numberHistory = this.getNumberHistory()
+    this.neighborhoodHistory = this.getNeighborhoodHistory()
+    this.cepHistory = this.getCepHistory()
+    this.cityHistory = this.getCityHistory()
   },
   methods: {
     selectState (state) {
