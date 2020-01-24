@@ -11,6 +11,9 @@ const mixin = {
     },
     getFormattedDay (date) {
       return moment(date).format('dddd, DD/MM/YYYY').toLowerCase()
+    },
+    getFormattedDate (date) {
+      return moment(date).format('DD/MM/YYYY')
     }
   }
 }

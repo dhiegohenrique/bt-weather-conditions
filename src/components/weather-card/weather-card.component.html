@@ -1,22 +1,19 @@
 <section class="weather-card">
-  <v-card class="mx-auto" max-width="400" light >
+  <v-card class="mx-auto" max-width="400" light>
     <v-list-item two-line light>
       <v-list-item-content>
-        <v-list-item-title class="headline">{{weatherConditions.name}}</v-list-item-title>
+        <v-list-item-title class="headline">{{formattedWeatherConditions.name}}</v-list-item-title>
         <v-list-item-subtitle>
-          <span v-if="isCurrentDate" v-html="currentDateHour" />
-          <template v-else>
-            {{weatherConditions.date}}
-          </template>
+          <span v-html="formattedWeatherConditions.date" />
         </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
 
     <v-card-text>
       <v-row align="center" no-gutters>
-        <v-col class="display-2 temp" cols="6">{{weatherConditions.temp}}&deg;C</v-col>
+        <v-col class="display-2 temp" cols="6">{{formattedWeatherConditions.temp}}&deg;C</v-col>
         <v-col cols="6">
-          <v-img :src="weatherConditions.icon" :lazy-src="weatherConditions.icon">
+          <v-img :src="formattedWeatherConditions.icon" :lazy-src="formattedWeatherConditions.icon">
             <template v-slot:placeholder>
               <v-row class="fill-height ma-0" align="center" justify="center" no-gutters>
                 <v-progress-circular indeterminate color="primary" />
@@ -27,7 +24,7 @@
       </v-row>
       <v-row align="center">
         <v-col class="display-1" cols="12">
-          {{weatherConditions.description}}
+          {{formattedWeatherConditions.description}}
         </v-col>
       </v-row>
     </v-card-text>

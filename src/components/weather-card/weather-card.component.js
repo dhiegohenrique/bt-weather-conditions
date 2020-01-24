@@ -67,15 +67,22 @@ export default {
     },
     isCurrentDate () {
       return this.weatherConditions.date === this.getFormattedDay(this.currentDate)
-    }
-  },
-  mounted () {
-    this.weatherConditions.date = this.getFormattedDay(this.weatherConditions.date)
-    this.weatherConditions.sunrise = this.getFormattedHour(this.weatherConditions.sunrise)
-    this.weatherConditions.sunset = this.getFormattedHour(this.weatherConditions.sunset)
+    },
+    formattedWeatherConditions () {
+      const formatted = this._.clone(this.weatherConditions)
+      formatted.date = this.getFormattedDay(this.weatherConditions.date)
+      if (this.getFormattedDate(this.weatherConditions.date) === this.getFormattedDate(this.currentDate)) {
+        formatted.date = `<b>Hoje, </b> ${this.getFormattedDateHour(this.currentDate)}`
+      }
 
-    this.fields.forEach((field) => {
-      field.value = `${this.weatherConditions[field.key]}${field.suffix}`
-    })
+      formatted.sunrise = this.getFormattedHour(this.weatherConditions.sunrise)
+      formatted.sunset = this.getFormattedHour(this.weatherConditions.sunset)
+
+      this.fields.forEach((field) => {
+        field.value = `${formatted[field.key]}${field.suffix}`
+      })
+
+      return formatted
+    }
   }
 }
