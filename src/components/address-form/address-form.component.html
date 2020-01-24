@@ -19,26 +19,26 @@
 
   <v-form>
     <v-row no-gutters>
-      <v-col cols="9" xl="9" lg="9" md="9" sm="8" xs="8">
-        <v-text-field v-model="street" label="Rua" maxlength="50" @keyup.enter="search"/>
+      <v-col :cols="isMobile ? '7' : '9'">
+        <v-text-field v-model="street" label="Rua" maxlength="50" @keyup.enter="search" />
       </v-col>
-      <v-col cols="3" xl="3" lg="3" md="3" sm="4" xs="4">
-        <v-text-field v-model="number" label="Número" v-mask="'#####'" @keyup.enter="search"/>
-      </v-col>
-    </v-row>
-    <v-row no-gutters>
-      <v-col cols="9" xl="9" lg="9" md="9" sm="8" xs="8">
-        <v-text-field v-model="neighborhood" label="Bairro" maxlength="50" @keyup.enter="search"/>
-      </v-col>
-      <v-col cols="3" xl="3" lg="3" md="3" sm="4" xs="4">
-        <v-text-field v-model="cep" label="CEP" v-mask="'#####-###'" @keyup.enter="search"/>
+      <v-col :cols="isMobile ? '5' : '3'">
+        <v-text-field v-model="number" label="Número" v-mask="'#####'" @keyup.enter="search" />
       </v-col>
     </v-row>
     <v-row no-gutters>
-      <v-col cols="9">
-        <v-text-field v-model="city" label="Cidade" maxlength="50" @keyup.enter="search"/>
+      <v-col :cols="isMobile ? '7' : '9'">
+        <v-text-field v-model="neighborhood" label="Bairro" maxlength="50" @keyup.enter="search" />
       </v-col>
-      <v-col cols="3">
+      <v-col :cols="isMobile ? '5' : '3'">
+        <v-text-field v-model="cep" label="CEP" v-mask="'#####-###'" @keyup.enter="search" />
+      </v-col>
+    </v-row>
+    <v-row no-gutters>
+      <v-col :cols="isMobile ? '7' : '9'">
+        <v-text-field v-model="city" label="Cidade" maxlength="50" @keyup.enter="search" />
+      </v-col>
+      <v-col :cols="isMobile ? '5' : '3'">
         <select-search title="Estado" :maxLength="2" :minCharSearch="1" :items="stateAcronyms" @selectItem="selectState"
           :hasValidateItem="true" ref="select-state" />
       </v-col>

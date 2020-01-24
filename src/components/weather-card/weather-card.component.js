@@ -10,10 +10,6 @@ export default {
     weatherConditions: {
       type: Object,
       required: true
-    },
-    showCurrentDateHour: {
-      type: Boolean,
-      default: false
     }
   },
   data () {
@@ -61,12 +57,16 @@ export default {
           value: '',
           suffix: 'h'
         }
-      ]
+      ],
+      currentDate: moment().tz('America/Sao_Paulo')
     }
   },
   computed: {
     currentDateHour () {
-      return `<b>Hoje, </b> ${this.getFormattedDateHour(moment().tz('America/Sao_Paulo'))}`
+      return `<b>Hoje, </b> ${this.getFormattedDateHour(this.currentDate)}`
+    },
+    isCurrentDate () {
+      return this.weatherConditions.date === this.getFormattedDay(this.currentDate)
     }
   },
   mounted () {
@@ -81,21 +81,6 @@ export default {
     const el = document.querySelector('.weather-card')
     if (el) {
       el.scrollIntoView()
-    }
-
-    // this.scrollIntoView()
-  },
-  updated () {
-    // this.scrollIntoView()
-  },
-  methods: {
-    scrollIntoView () {
-      // eslint-disable-next-line no-console
-      console.log('entrou aqui')
-      const el = document.querySelector('.weather-card')
-      if (el) {
-        el.scrollIntoView()
-      }
     }
   }
 }
