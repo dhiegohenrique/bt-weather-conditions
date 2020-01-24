@@ -1,5 +1,5 @@
 <section class="home">
-  <v-row align="center" justify="center">
+  <v-row align="center" justify="center" no-gutters>
     <v-col class="text-center logo" cols="12">
       <v-img :src="imgRain" :lazy-src="imgRain" aspect-ratio="1" class="grey lighten-2 elevation-3" max-height="300">
         <template v-slot:placeholder>
@@ -10,17 +10,15 @@
         <span>CONDIÇÕES METEOROLÓGICAS</span>
       </v-img>
     </v-col>
-    <v-col class="text-center" cols="12">
-    </v-col>
   </v-row>
 
   <address-form @setGeolocation="setGeolocation" @clear="clear" />
 
-  <v-row align="center" v-if="weatherConditions.length">
+  <v-row align="center" v-if="weatherConditions.length" no-gutters>
     <v-col class="text-center carousel" cols="12">
-      <v-carousel hide-delimiters height="900">
+      <v-carousel hide-delimiters height="auto">
         <v-carousel-item v-for="(weatherCondition, index) in weatherConditions" :key="'weatherCondition'+index">
-          <weather-card :weatherConditions="weatherCondition" :showCurrentDateHour="index === 0" :ref="'weatherCondition'+index"/>
+          <weather-card :weatherConditions="weatherCondition" :ref="'weatherCondition'+index" />
         </v-carousel-item>
       </v-carousel>
     </v-col>
