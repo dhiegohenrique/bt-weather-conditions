@@ -26,8 +26,14 @@ export default {
       this.weatherConditions = await this.getWeatherConditions(geolocation.lat, geolocation.lon)
 
       const rowWeather = this.$refs['row-weather']
-      VueScrollTo.scrollTo(rowWeather)
-      this.$root.$emit('hideLoading')
+
+      const options = {
+        onDone: () => {
+          this.$root.$emit('hideLoading')
+        }
+      }
+
+      VueScrollTo.scrollTo(rowWeather, 500, options)
     },
     clear () {
       this.currentWeather = null

@@ -1,24 +1,13 @@
 # bt-weather-conditions
 
-## Project setup
+### Requisitos:
 ```
-npm install
+node: no mínimo v10.6.0 (https://nodejs.org/pt-br/download/)
+npm: no mínimo v6.1.0 (https://nodejs.org/pt-br/download/)
+chrome (para executar os testes): no mínimo v79 (https://www.whatismybrowser.com/detect/what-version-of-chrome-do-i-have)
 ```
 
-### Compiles and hot-reloads for development
+### Para executar
 ```
 npm run serve
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
