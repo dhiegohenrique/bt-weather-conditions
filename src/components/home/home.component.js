@@ -22,20 +22,13 @@ export default {
   },
   methods: {
     async setGeolocation (geolocation) {
-      try {
-        this.$root.$emit('showLoading')
-        this.weatherConditions = await this.getWeatherConditions(geolocation.lat, geolocation.lon)
+      this.weatherConditions = await this.getWeatherConditions(geolocation.lat, geolocation.lon)
 
-        // const el = this.$refs.weatherCondition0
-        // eslint-disable-next-line no-debugger
-        const el = document.querySelector('.weather-card')
-        // eslint-disable-next-line no-debugger
-        if (el) {
-          el.scrollIntoView()
-        }
-      } finally {
-        this.$root.$emit('hideLoading')
+      const el = document.querySelector('.weather-card')
+      if (el) {
+        el.scrollIntoView()
       }
+      this.$root.$emit('hideLoading')
     },
     clear () {
       this.currentWeather = null

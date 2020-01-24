@@ -39,32 +39,28 @@ export default {
       this.$root.$emit('showLoading')
       navigator.geolocation.getCurrentPosition((position) => {
         const geolocation = getLocation(position)
-        this.$root.$emit('hideLoading')
         this.$emit('setGeolocation', geolocation)
       })
     },
     async search () {
-      try {
-        this.$root.$emit('showLoading')
+      this.$root.$emit('showLoading')
 
-        const address = {
-          street: this.street,
-          number: this.number,
-          neighborhood: this.neighborhood,
-          cep: this.cep,
-          city: this.city,
-          state: this.state
-        }
-
-        const geolocation = await this.getGeolocation(address)
-        if (!geolocation) {
-          this.$root.$emit('showToast', 'Não foi encontrada uma localização com os dados informados.')
-        } else {
-          this.$emit('setGeolocation', geolocation)
-        }
-      } finally {
-        this.$root.$emit('hideLoading')
+      const address = {
+        street: this.street,
+        number: this.number,
+        neighborhood: this.neighborhood,
+        cep: this.cep,
+        city: this.city,
+        state: this.state
       }
+
+      const geolocation = await this.getGeolocation(address)
+      if (!geolocation) {
+        this.$root.$emit('showToast', 'Não foi encontrada uma localização com os dados informados.')
+      } else {
+        this.$emit('setGeolocation', geolocation)
+      }
+      this.$root.$emit('hideLoading')
     },
     clear () {
       this.street = ''
