@@ -85,7 +85,7 @@ module.exports = {
     await validateOnlyNumbers(browser, `${xpathSection}//*[@id="cep"]//input`, '88015-902', true)
   },
 
-  'Should apply mask on cep field': async function (browser) {
+  'Should apply mask on cep field': !async function (browser) {
     const xpath = `${xpathSection}//*[@id="cep"]//input`
     const value = '11111111'
     const maskValue = VMasker.toPattern(value, '99999-999')
@@ -94,6 +94,16 @@ module.exports = {
 
     browser
       .expect.element(xpath).value.to.equal(maskValue)
+  },
+
+  'Should clear state field when state is invalid': async function (browser) {
+    const xpath = `${xpathSection}//*[@id="state"]//input`
+    const value = 'ed'
+
+    await browser.sendKeys(xpath, [value, browser.Keys.TAB])
+
+    browser
+      .expect.element(xpath).value.to.equal('')
   },
 }
 
