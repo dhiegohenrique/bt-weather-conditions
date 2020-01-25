@@ -76,8 +76,12 @@ module.exports = {
     await validateOnlyNumbers(browser, `${xpathSection}//*[@id="number"]//input`, '12345', true)
   },
 
-  'Should allow only numbers on cep field on insert': async function (browser) {
+  'Should allow only numbers on cep field on insert': !async function (browser) {
     await validateOnlyNumbers(browser, `${xpathSection}//*[@id="cep"]//input`, '88015-902')
+  },
+
+  'Should allow only numbers on cep field on copy and paste': async function (browser) {
+    await validateOnlyNumbers(browser, `${xpathSection}//*[@id="cep"]//input`, '88015-902', true)
   },
 }
 
