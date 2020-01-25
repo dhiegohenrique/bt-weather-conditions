@@ -19,3 +19,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+chromedriver.log
+/tests/e2e/reports
+/tests_output
