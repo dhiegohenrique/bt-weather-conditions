@@ -1,4 +1,5 @@
 const xpathSection = '//section[contains(@class, "address-form")]'
+const VMasker = require('vanilla-masker')
 
 module.exports = {
   beforeEach: (browser) => {
@@ -80,8 +81,19 @@ module.exports = {
     await validateOnlyNumbers(browser, `${xpathSection}//*[@id="cep"]//input`, '88015-902')
   },
 
-  'Should allow only numbers on cep field on copy and paste': async function (browser) {
+  'Should allow only numbers on cep field on copy and paste': !async function (browser) {
     await validateOnlyNumbers(browser, `${xpathSection}//*[@id="cep"]//input`, '88015-902', true)
+  },
+
+  'Should apply mask on cep field': async function (browser) {
+    const xpath = `${xpathSection}//*[@id="cep"]//input`
+    const value = '11111111'
+    const maskValue = VMasker.toPattern(value, '99999-999')
+
+    await browser.sendKeys(xpath, [value, browser.Keys.TAB])
+
+    browser
+      .expect.element(xpath).value.to.equal(maskValue)
   },
 }
 
