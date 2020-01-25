@@ -22,3 +22,4 @@ yarn-error.log*
 chromedriver.log
 /tests/e2e/reports
 /tests_output
+debug.log
