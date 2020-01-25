@@ -17,7 +17,6 @@ export default {
   data () {
     return {
       weatherConditions: [],
-      currentWeather: null,
       imgRain: require('@/assets/rain.png')
     }
   },
@@ -25,18 +24,17 @@ export default {
     async setGeolocation (geolocation) {
       this.weatherConditions = await this.getWeatherConditions(geolocation.lat, geolocation.lon)
 
-      const rowWeather = this.$refs['row-weather']
-
       const options = {
+        cancelable: false,
         onDone: () => {
           this.$root.$emit('hideLoading')
         }
       }
 
+      const rowWeather = this.$refs['row-weather']
       VueScrollTo.scrollTo(rowWeather, 500, options)
     },
     clear () {
-      this.currentWeather = null
       this.weatherConditions = []
     }
   }
