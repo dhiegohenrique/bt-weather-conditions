@@ -1,5 +1,16 @@
+import { mask as maskDirective } from 'vue-the-mask'
+
 export default {
   name: 'select-search',
+  directives: {
+    mask: (element, maskOptions) => {
+      if (!maskOptions.value) {
+        return
+      }
+
+      maskDirective(element, maskOptions)
+    }
+  },
   props: {
     items: {
       type: Array,
@@ -13,14 +24,6 @@ export default {
       type: String,
       default: ''
     },
-    isInvalid: {
-      type: Boolean,
-      default: false
-    },
-    msgValidation: {
-      type: String,
-      default: ''
-    },
     minCharSearch: {
       type: Number,
       default: 3
@@ -28,20 +31,18 @@ export default {
     hasValidateItem: {
       type: Boolean,
       default: false
+    },
+    maskPattern: {
+      type: String,
+      default: null
     }
   },
   data () {
     return {
       showPopup: false,
       searchValue: '',
-      filteredItems: []
-    }
-  },
-  computed: {
-    style () {
-      return {
-        'max-height': `${45 * this.maxItems}px`
-      }
+      filteredItems: [],
+      listenerFocusOut: null
     }
   },
   methods: {
@@ -58,6 +59,7 @@ export default {
       })
     },
     filterItem () {
+      this.emit()
       if (!this.searchValue || this.searchValue.length < this.minCharSearch) {
         this.filteredItems = []
         return
@@ -68,42 +70,51 @@ export default {
     },
     selectItem (item) {
       this.searchValue = item
-      this.showPopup = false
-      // eslint-disable-next-line no-console
-      console.log('selecionou o item: ' + item)
-      this.$emit('selectItem', item)
+      this.emit()
     },
-    validateItem (event) {
-      // // eslint-disable-next-line no-console
-      // console.log('entrou aqui1: ' + this.hasValidateItem)
-      // this.showPopup = false
+    emit () {
+      if (this.showPopup) {
+        this.showPopup = false
+      }
 
-      // // eslint-disable-next-line no-debugger
-      // // debugger
-      // if (!this.hasValidateItem || event.relatedTarget.parentElement.className.includes('v-item-group')) {
-      //   return
-      // }
-
-      // // eslint-disable-next-line no-console
-      // console.log('entrou aqui2')
-      // // eslint-disable-next-line no-debugger
-      // // debugger
-
-      // const search = this.normalizeItem(this.searchValue)
-      // const index = this.items.findIndex((item) => {
-      //   return search === this.normalizeItem(item)
-      // })
-
-      // if (index === -1) {
-      //   this.searchValue = ''
-      // } else {
-      //   this.searchValue = this.items[index]
-      // }
-
-      // this.$emit('selectItem', this.searchValue)
+      this.$emit('selectItem', this.searchValue)
     },
     clear () {
       this.searchValue = ''
+      this.showPopup = false
+    },
+    clickOutside () {
+      if (!this.showPopup) {
+        return
+      }
+
+      this.showPopup = false
+    },
+    search () {
+      this.showPopup = false
+      this.$emit('search')
+    },
+    closePopup (event) {
+      if (event.relatedTarget && !event.relatedTarget.className.includes('v-list-item')) {
+        this.showPopup = false
+      }
+
+      if (!this.hasValidateItem) {
+        return
+      }
+
+      const search = this.normalizeItem(this.searchValue)
+      const item = this.items.find((item) => {
+        return search === this.normalizeItem(item)
+      })
+
+      if (item) {
+        this.searchValue = item
+      } else {
+        this.searchValue = ''
+      }
+
+      this.emit()
     }
   }
 }
