@@ -15,7 +15,7 @@
   <address-form @setGeolocation="setGeolocation" @clear="clear" />
 
   <v-row align="center" no-gutters ref="row-weather">
-    <v-col class="text-center carousel" cols="12">
+    <v-col class="text-center carousel" cols="12" v-if="weatherConditions.length">
       <v-carousel hide-delimiters height="auto">
         <v-carousel-item v-for="(weatherCondition, index) in weatherConditions" :key="'weatherCondition'+index">
           <weather-card :weatherConditions="weatherCondition" :ref="'weatherCondition'+index" />
