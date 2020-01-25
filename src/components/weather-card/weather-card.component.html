@@ -4,7 +4,7 @@
       <v-list-item-content>
         <v-list-item-title class="headline">{{formattedWeatherConditions.name}}</v-list-item-title>
         <v-list-item-subtitle>
-          <span v-html="formattedWeatherConditions.date" />
+          <span v-html="formattedWeatherConditions.date" id="date"/>
         </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
@@ -13,7 +13,7 @@
       <v-row align="center" no-gutters>
         <v-col class="display-2 temp" cols="6">{{formattedWeatherConditions.temp}}&deg;C</v-col>
         <v-col cols="6">
-          <v-img :src="formattedWeatherConditions.icon" :lazy-src="formattedWeatherConditions.icon">
+          <v-img :src="formattedWeatherConditions.icon" :lazy-src="formattedWeatherConditions.icon" id="icon">
             <template v-slot:placeholder>
               <v-row class="fill-height ma-0" align="center" justify="center" no-gutters>
                 <v-progress-circular indeterminate color="primary" />

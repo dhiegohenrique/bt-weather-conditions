@@ -18,12 +18,14 @@ export default {
   },
   data () {
     return {
-      weatherConditions: []
+      weatherConditions: [],
+      indexWeather: 0
     }
   },
   methods: {
     async setGeolocation (geolocation) {
       this.weatherConditions = await this.getWeatherConditions(geolocation.lat, geolocation.lon)
+      this.indexWeather = 0
 
       const options = {
         cancelable: false,

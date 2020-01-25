@@ -2,12 +2,13 @@ const xpathSection = '//section[contains(@class, "address-form")]'
 const VMasker = require('vanilla-masker')
 
 module.exports = {
+  '@disabled': true,
   beforeEach: (browser) => {
     browser
       .refresh()
   },
 
-  'Should show all fields': !function (browser) {
+  'Should show all fields': function (browser) {
     const fields = [
       `${xpathSection}//*[@id="street"]`, `${xpathSection}//*[@id="number"]`, `${xpathSection}//*[@id="neighborhood"]`,
       `${xpathSection}//*[@id="cep"]`, `${xpathSection}//*[@id="city"]`, `${xpathSection}//*[@id="state"]`
@@ -20,7 +21,7 @@ module.exports = {
     })
   },
 
-  'Should allow max characters in fields': !function (browser) {
+  'Should allow max characters in fields': function (browser) {
     const fields = [
       {
         xpath: `${xpathSection}//*[@id="street"]//input`,
@@ -69,23 +70,23 @@ module.exports = {
     })
   },
 
-  'Should allow only numbers on number field on insert': !async function (browser) {
+  'Should allow only numbers on number field on insert': async function (browser) {
     await validateOnlyNumbers(browser, `${xpathSection}//*[@id="number"]//input`, '12345')
   },
 
-  'Should allow only numbers on number field on copy and paste': !async function (browser) {
+  'Should allow only numbers on number field on copy and paste': async function (browser) {
     await validateOnlyNumbers(browser, `${xpathSection}//*[@id="number"]//input`, '12345', true)
   },
 
-  'Should allow only numbers on cep field on insert': !async function (browser) {
+  'Should allow only numbers on cep field on insert': async function (browser) {
     await validateOnlyNumbers(browser, `${xpathSection}//*[@id="cep"]//input`, '88015-902')
   },
 
-  'Should allow only numbers on cep field on copy and paste': !async function (browser) {
+  'Should allow only numbers on cep field on copy and paste': async function (browser) {
     await validateOnlyNumbers(browser, `${xpathSection}//*[@id="cep"]//input`, '88015-902', true)
   },
 
-  'Should apply mask on cep field': !async function (browser) {
+  'Should apply mask on cep field': async function (browser) {
     const xpath = `${xpathSection}//*[@id="cep"]//input`
     const value = '11111111'
     const maskValue = VMasker.toPattern(value, '99999-999')
