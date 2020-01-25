@@ -6,7 +6,7 @@ module.exports = {
       .refresh()
   },
 
-  'Should show all fields': !function (browser) {
+  'Should show all fields': function (browser) {
     const fields = [
       `${xpathSection}//*[@id="street"]`, `${xpathSection}//*[@id="number"]`, `${xpathSection}//*[@id="neighborhood"]`,
       `${xpathSection}//*[@id="cep"]`, `${xpathSection}//*[@id="city"]`, `${xpathSection}//*[@id="state"]`
@@ -19,7 +19,7 @@ module.exports = {
     })
   },
 
-  'Should allow max characters in fields': !function (browser) {
+  'Should allow max characters in fields': function (browser) {
     const fields = [
       {
         xpath: `${xpathSection}//*[@id="street"]//input`,
@@ -63,23 +63,26 @@ module.exports = {
 
           browser
             .sendKeys(xpath, value, done)
+            .assert.valueLength(xpath, maxLength)
         })
-        .assert.valueLength(xpath, maxLength)
     })
   },
 
   'Should allow only numbers on number field on insert': async function (browser) {
     await validateOnlyNumbers(browser, `${xpathSection}//*[@id="number"]//input`, '12345')
   },
+
+  'Should allow only numbers on number field on copy and paste': async function (browser) {
+    await validateOnlyNumbers(browser, `${xpathSection}//*[@id="number"]//input`, '12345', true)
+  },
 }
 
-const validateOnlyNumbers = (browser, xpath, value, copyAndPaste) => {
-  return new Promise((resolve) => {
+const validateOnlyNumbers = async (browser, xpath, value, copyAndPaste) => {
+  return new Promise(async (resolve) => {
     const xpathStreet = `${xpathSection}//*[@id="street"]//input`
     const invalidValue = `QWERTTYU#@ABc${value}dEF&*%%@!)-_`
 
-    browser
-      .clearValue(xpath)
+    await browser.clearValue(xpath)
 
     browser
       .perform((done) => {
@@ -92,17 +95,16 @@ const validateOnlyNumbers = (browser, xpath, value, copyAndPaste) => {
       })
 
     browser
-      .perform((done) => {
+      .perform(async (done) => {
         if (!copyAndPaste) {
           return done()
         }
 
-        browser
-          .clearValue(xpathStreet)
-          .setValue(xpathStreet, invalidValue)
-          .sendKeys(xpathStreet, [browser.Keys.CONTROL, 'a'])
-          .sendKeys(xpathStreet, [browser.Keys.CONTROL, 'x'])
-          .sendKeys(xpath, [browser.Keys.CONTROL, 'v'], done)
+        await browser.clearValue(xpathStreet)
+        await browser.sendKeys(xpathStreet, invalidValue)
+        await browser.sendKeys(xpathStreet, [browser.Keys.CONTROL, 'a'])
+        await browser.sendKeys(xpathStreet, [browser.Keys.CONTROL, 'x'])
+        await browser.sendKeys(xpath, [browser.Keys.CONTROL, 'v'], done)
       })
 
     browser
