@@ -4,7 +4,8 @@ const fs = require('fs')
 const axios = require('axios')
 const util = require('util')
 const readFile = util.promisify(fs.readFile)
-const xpathLogo = '//*[@id="logo"]'
+const xpathSection = '//section[contains(@class, "logo")]'
+const xpathLogo = `${xpathSection}//*[@id="logo"]`
 
 module.exports = {
   beforeEach: (browser) => {
@@ -37,5 +38,13 @@ module.exports = {
         browser
           .assert.ok(imgBase64 === resImgBase64, 'Should has corret image')
       })
+  },
+
+  'Should correct title': function (browser) {
+    const xpath = `${xpathSection}//*[@id="title"]`
+
+    browser
+      .waitForElementVisible(xpath)
+      .expect.element(xpath).text.which.matches(new RegExp('condições meteorológicas', 'i'))
   }
 }
