@@ -2,6 +2,7 @@ import WeatherMixin from '@/shared/mixins/weather.mixin'
 import GeolocationMixin from '@/shared/mixins/geolocation.mixin'
 import WeatherCard from '@/components/weather-card/index'
 import AddressForm from '@/components/address-form/index'
+import Logo from '@/components/logo/index'
 import VueScrollTo from 'vue-scrollto'
 
 export default {
@@ -12,12 +13,12 @@ export default {
   ],
   components: {
     WeatherCard,
-    AddressForm
+    AddressForm,
+    Logo
   },
   data () {
     return {
-      weatherConditions: [],
-      imgRain: require('@/assets/rain.png')
+      weatherConditions: []
     }
   },
   methods: {
