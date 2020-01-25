@@ -6,7 +6,7 @@ module.exports = {
       .refresh()
   },
 
-  'Should show all fields': function (browser) {
+  'Should show all fields': !function (browser) {
     const fields = [
       `${xpathSection}//*[@id="street"]`, `${xpathSection}//*[@id="number"]`, `${xpathSection}//*[@id="neighborhood"]`,
       `${xpathSection}//*[@id="cep"]`, `${xpathSection}//*[@id="city"]`, `${xpathSection}//*[@id="state"]`
@@ -19,7 +19,7 @@ module.exports = {
     })
   },
 
-  'Should allow max characters in fields': function (browser) {
+  'Should allow max characters in fields': !function (browser) {
     const fields = [
       {
         xpath: `${xpathSection}//*[@id="street"]//input`,
@@ -68,12 +68,16 @@ module.exports = {
     })
   },
 
-  'Should allow only numbers on number field on insert': async function (browser) {
+  'Should allow only numbers on number field on insert': !async function (browser) {
     await validateOnlyNumbers(browser, `${xpathSection}//*[@id="number"]//input`, '12345')
   },
 
-  'Should allow only numbers on number field on copy and paste': async function (browser) {
+  'Should allow only numbers on number field on copy and paste': !async function (browser) {
     await validateOnlyNumbers(browser, `${xpathSection}//*[@id="number"]//input`, '12345', true)
+  },
+
+  'Should allow only numbers on cep field on insert': async function (browser) {
+    await validateOnlyNumbers(browser, `${xpathSection}//*[@id="cep"]//input`, '88015-902')
   },
 }
 
