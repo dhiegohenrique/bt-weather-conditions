@@ -154,7 +154,7 @@ module.exports = {
     })
   },
 
-  'Should apply value on field when click on suggestion': async function (browser) {
+  'Should apply value on field when click on suggestion': !async function (browser) {
     const xpathId = '//*[@id="street"]'
     const xpathInput = `${xpathId}//input`
     const xpathSuggestion = `${xpathId}//div[contains(@class, "v-list") and contains(text(), "${address.street}")]`
@@ -201,8 +201,23 @@ module.exports = {
       .assert.ok(moment(previousDate, dateFormat).isAfter(moment(firstDate, dateFormat)), 'Should has previous weather conditions')
   },
 
-  'Should clear all fields when click on clear button': !async function (browser) {
+  'Should clear all fields when click on clear button': async function (browser) {
     await fillInFields(browser)
+    await browser.click(xpathSearch)
+    await browser.waitForLoadingModal()
+    await browser.click('//*[@id="clear"]')
+
+    await browser.waitForElementNotPresent(xpathSectionWeatherCard)
+    browser
+      .expect.element(xpathSectionWeatherCard).to.not.be.present
+
+    browser
+      .perform(() => {
+        fields.forEach((field) => {
+          browser
+            .expect.element(field).value.to.equal('')
+        })
+      })
   },
 }
 
