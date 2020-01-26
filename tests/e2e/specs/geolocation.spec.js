@@ -1,6 +1,12 @@
 const moment = require('moment')
 const xpathSectionAddress = '//section[contains(@class, "address-form")]'
 const xpathSectionWeatherCard = '//section[contains(@class, "weather-card")]'
+const xpathSearch = '//*[@id="search"]'
+const xpathPrevious = '//div[contains(@class, "v-window__prev")]'
+const xpathNext = '//div[contains(@class, "v-window__next")]'
+const xpathDate = `${xpathSectionWeatherCard}//*[@id="date"]`
+const xpathTransaction = '//div[contains(@class, "v-window__container--is-active")]'
+const dateFormat = 'DD/MM/YYYY'
 const fields = [
   `${xpathSectionAddress}//*[@id="street"]//input`, `${xpathSectionAddress}//*[@id="number"]//input`, `${xpathSectionAddress}//*[@id="neighborhood"]//input`,
   `${xpathSectionAddress}//*[@id="cep"]//input`, `${xpathSectionAddress}//*[@id="city"]//input`, `${xpathSectionAddress}//*[@id="state"]//input`
@@ -15,28 +21,24 @@ const address = {
   state: 'sc'
 }
 
-let firstDate
-
 module.exports = {
   beforeEach: (browser) => {
     browser
       .refresh()
   },
 
-  'Should show weather conditions by geolocation': async function (browser) {
-    const xpathWeatherCard = `//section[contains(@class, "weather-card")]`
-
+  'Should show weather conditions by geolocation': !async function (browser) {
     await fillInFields(browser)
-    await browser.click('//*[@id="search"]')
+    await browser.click(xpathSearch)
     await browser.waitForLoadingModal()
-    await browser.waitForElementVisible(xpathWeatherCard, 10000)
+    await browser.waitForElementVisible(xpathSectionWeatherCard, 10000)
 
     browser
-      .expect.element(xpathWeatherCard).to.be.visible
+      .expect.element(xpathSectionWeatherCard).to.be.visible
 
     const navigationButtons = [
-      '//div[contains(@class, "v-window__prev")]',
-      '//div[contains(@class, "v-window__next")]'
+      xpathNext,
+      xpathPrevious
     ]
 
     browser
@@ -50,14 +52,14 @@ module.exports = {
         })
       })
 
-    const xpathDate = `(${xpathSectionWeatherCard}//*[@id="date"])[1]`
+
 
     browser
       .perform(() => {
         const fieldsHeader = [
-          `(${xpathSectionWeatherCard}//div[contains(@class, "headline")])[1]`,
+          `${xpathSectionWeatherCard}//div[contains(@class, "headline")]`,
           xpathDate,
-          `(${xpathSectionWeatherCard}//div[contains(@class, "temp")])[1]`
+          `${xpathSectionWeatherCard}//div[contains(@class, "temp")]`
         ]
 
         fieldsHeader.forEach((field) => {
@@ -68,12 +70,7 @@ module.exports = {
                 .assert.ok(text.length > 0, `Should field '${field}' has value: ${text}`)
 
               if (field === xpathDate) {
-                text = text.substring(text.lastIndexOf(','))
-                text = text.replace(', ', '')
-                text = text.substring(0, text.indexOf(' ')).trim()
-                firstDate = text
-                const dateFormat = 'DD/MM/YYYY'
-
+                text = getDate(text)
                 browser
                   .assert.ok(moment(text, dateFormat).isValid(), `Should has date in format '${dateFormat}'`)
               }
@@ -83,7 +80,7 @@ module.exports = {
 
     browser
       .perform(() => {
-        const xpathIcon = `(${xpathSectionWeatherCard}//*[@id="icon"]//div[contains(@class, "v-image__image")])[1]`
+        const xpathIcon = `${xpathSectionWeatherCard}//*[@id="icon"]//div[contains(@class, "v-image__image")]`
 
         browser
           .getAttribute(xpathIcon, 'style', (result) => {
@@ -135,6 +132,20 @@ module.exports = {
       })
   },
 
+  'Should change weather conditions when click on next button': async function (browser) {
+    await fillInFields(browser)
+    await browser.click(xpathSearch)
+    await browser.waitForLoadingModal()
+
+    const result = await browser.getText(xpathDate)
+    const firstDate = getDate(result.value)
+    const nextDate = moment(firstDate, dateFormat).add(1, 'day').format(dateFormat)
+
+    await browser.click(xpathNext)
+    await browser.waitForElementNotPresent(xpathTransaction)
+    await browser.waitForElementVisible(`${xpathSectionWeatherCard}//*[@id="date" and contains(text(),'${nextDate}')]`)
+  },
+
   'Should clear all fields when click on clear button': !async function (browser) {
     await fillInFields(browser)
   },
@@ -159,4 +170,13 @@ const validateSaveHistory = (browser) => {
   return new Promise((resolve) => {
 
   })
+}
+
+const getDate = (text) => {
+  console.log('entrou aqui1: ' + text)
+  text = text.substring(text.lastIndexOf(', ') + 2)
+  console.log('entrou aqui2: ' + text)
+  text = text.substring(0, 10)
+  console.log('entrou aqui3: ' + text)
+  return text
 }
