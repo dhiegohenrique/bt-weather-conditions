@@ -135,7 +135,7 @@ module.exports = {
       })
   },
 
-  'Should show address suggestions': !function (browser) {
+  'Should show address suggestions': function (browser) {
     const fields = Object.keys(address).map((key) => {
       const value = address[key]
       return {
@@ -154,7 +154,7 @@ module.exports = {
     })
   },
 
-  'Should apply value on field when click on suggestion': !async function (browser) {
+  'Should apply value on field when click on suggestion': async function (browser) {
     const xpathId = '//*[@id="street"]'
     const xpathInput = `${xpathId}//input`
     const xpathSuggestion = `${xpathId}//div[contains(@class, "v-list") and contains(text(), "${address.street}")]`
@@ -169,7 +169,7 @@ module.exports = {
       .expect.element(xpathInput).value.to.equal(address.street)
   },
 
-  'Should change weather conditions when click on next button': !async function (browser) {
+  'Should change weather conditions when click on next button': async function (browser) {
     await fillInFields(browser)
     await browser.click(xpathSearch)
     await browser.waitForLoadingModal()
@@ -183,7 +183,7 @@ module.exports = {
     await browser.waitForElementVisible(`${xpathSectionWeatherCard}//*[@id="date" and contains(text(),'${nextDate}')]`)
   },
 
-  'Should change weather conditions when click on previous button': !async function (browser) {
+  'Should change weather conditions when click on previous button': async function (browser) {
     await fillInFields(browser)
     await browser.click(xpathSearch)
     await browser.waitForLoadingModal()

@@ -2,7 +2,6 @@ const xpathSection = '//section[contains(@class, "address-form")]'
 const VMasker = require('vanilla-masker')
 
 module.exports = {
-  '@disabled': true,
   beforeEach: (browser) => {
     browser
       .refresh()
