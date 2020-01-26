@@ -230,7 +230,17 @@ const fillInFields = (browser) => {
       const value = address[id]
 
       await browser.click(field)
-      await browser.sendKeys(field, value)
+
+      if (id === 'cep') {
+        const characters = value.split('')
+        characters.forEach(async (character) => {
+          await browser.sendKeys(field, character)
+          await browser.pause(100)
+        })
+      } else {
+        await browser.sendKeys(field, value)
+      }
+
       await browser.waitForValue(field, value)
       if (index === fields.length - 1) {
         resolve()
