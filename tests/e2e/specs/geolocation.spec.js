@@ -27,7 +27,7 @@ module.exports = {
       .refresh()
   },
 
-  'Should show weather conditions by geolocation': !async function (browser) {
+  'Should show weather conditions by geolocation': async function (browser) {
     await fillInFields(browser)
     await browser.click(xpathSearch)
     await browser.waitForLoadingModal()
@@ -130,6 +130,11 @@ module.exports = {
             })
         })
       })
+
+    browser
+      .perform(async () => {
+        await validateSaveLocalStorage(browser)
+      })
   },
 
   'Should change weather conditions when click on next button': !async function (browser) {
@@ -146,7 +151,7 @@ module.exports = {
     await browser.waitForElementVisible(`${xpathSectionWeatherCard}//*[@id="date" and contains(text(),'${nextDate}')]`)
   },
 
-  'Should change weather conditions when click on previous button': async function (browser) {
+  'Should change weather conditions when click on previous button': !async function (browser) {
     await fillInFields(browser)
     await browser.click(xpathSearch)
     await browser.waitForLoadingModal()
@@ -184,9 +189,20 @@ const fillInFields = (browser) => {
   })
 }
 
-const validateSaveHistory = (browser) => {
+const validateSaveLocalStorage = (browser) => {
   return new Promise((resolve) => {
+    browser
+      .execute(function () {
+        return JSON.parse(window.localStorage.getItem('bt-weather-conditions'))
+      }, [], (result) => {
+        const { geoLocations, weatherConditions, address } = result.value
+        browser
+          .assert.ok(geoLocations && geoLocations.length, 'Should save geolocations')
+          .assert.ok(weatherConditions && weatherConditions.length, 'Should save weatherConditions')
+          .assert.ok(address && address.length, 'Should save address')
 
+        resolve()
+      })
   })
 }
 
