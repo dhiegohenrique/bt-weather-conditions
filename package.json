@@ -6,8 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:e2e": "vue-cli-service test:e2e --parallel",
-    "lint": "vue-cli-service lint",
-    "start": "node server.js"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "axios": "^0.19.1",
