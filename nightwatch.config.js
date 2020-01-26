@@ -2,12 +2,13 @@ const path = require('path')
 
 module.exports = {
   globals_path: `${path.join(process.cwd(), 'tests/e2e/globals.js')}`,
+  live_output: true,
   test_settings: {
     chrome: {
       desiredCapabilities: {
         chromeOptions: {
           args: [
-            // 'headless',
+            'headless',
             '--no-sandbox',
             '--lang=pt-br',
             '--incognito',
