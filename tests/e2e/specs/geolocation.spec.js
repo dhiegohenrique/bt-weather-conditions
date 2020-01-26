@@ -132,7 +132,7 @@ module.exports = {
       })
   },
 
-  'Should change weather conditions when click on next button': async function (browser) {
+  'Should change weather conditions when click on next button': !async function (browser) {
     await fillInFields(browser)
     await browser.click(xpathSearch)
     await browser.waitForLoadingModal()
@@ -144,6 +144,24 @@ module.exports = {
     await browser.click(xpathNext)
     await browser.waitForElementNotPresent(xpathTransaction)
     await browser.waitForElementVisible(`${xpathSectionWeatherCard}//*[@id="date" and contains(text(),'${nextDate}')]`)
+  },
+
+  'Should change weather conditions when click on previous button': async function (browser) {
+    await fillInFields(browser)
+    await browser.click(xpathSearch)
+    await browser.waitForLoadingModal()
+
+    let result = await browser.getText(xpathDate)
+    const firstDate = getDate(result.value)
+
+    await browser.click(xpathPrevious)
+    await browser.waitForElementNotPresent(xpathTransaction)
+
+    result = await browser.getText(`(${xpathDate})[last()]`)
+    const previousDate = getDate(result.value)
+
+    browser
+      .assert.ok(moment(previousDate, dateFormat).isAfter(moment(firstDate, dateFormat)), 'Should has previous weather conditions')
   },
 
   'Should clear all fields when click on clear button': !async function (browser) {
@@ -173,10 +191,7 @@ const validateSaveHistory = (browser) => {
 }
 
 const getDate = (text) => {
-  console.log('entrou aqui1: ' + text)
   text = text.substring(text.lastIndexOf(', ') + 2)
-  console.log('entrou aqui2: ' + text)
   text = text.substring(0, 10)
-  console.log('entrou aqui3: ' + text)
   return text
 }
