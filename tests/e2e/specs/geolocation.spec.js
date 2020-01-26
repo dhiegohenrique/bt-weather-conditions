@@ -135,7 +135,7 @@ module.exports = {
       })
   },
 
-  'Should show address suggestions': async function (browser) {
+  'Should show address suggestions': !function (browser) {
     const fields = Object.keys(address).map((key) => {
       const value = address[key]
       return {
@@ -152,6 +152,21 @@ module.exports = {
       await browser.click('//*[@id="logo"]')
       await browser.waitForElementNotPresent(field.xpathSuggestion)
     })
+  },
+
+  'Should apply value on field when click on suggestion': async function (browser) {
+    const xpathId = '//*[@id="street"]'
+    const xpathInput = `${xpathId}//input`
+    const xpathSuggestion = `${xpathId}//div[contains(@class, "v-list") and contains(text(), "${address.street}")]`
+
+    await browser.click(xpathInput)
+    await browser.sendKeys(xpathInput, address.street.substring(0, 3))
+    await browser.waitForElementVisible(xpathSuggestion)
+    await browser.click(xpathSuggestion)
+    await browser.waitForValue(xpathInput, address.street)
+
+    browser
+      .expect.element(xpathInput).value.to.equal(address.street)
   },
 
   'Should change weather conditions when click on next button': !async function (browser) {
