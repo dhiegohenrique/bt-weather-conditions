@@ -106,6 +106,15 @@ module.exports = {
     browser
       .expect.element(xpath).value.to.equal('')
   },
+
+  'Should disable search button when fields is not filled': function (browser) {
+    const xpathSearch = '//*[@id="search"]'
+
+    browser
+      .assert.disabledProp(xpathSearch, true)
+      .sendKeys('//*[@id="street"]//input', 'abc')
+      .assert.disabledProp(xpathSearch, false)
+  }
 }
 
 const validateOnlyNumbers = async (browser, xpath, value, copyAndPaste) => {
