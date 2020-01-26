@@ -3,24 +3,25 @@ import { store } from '@/store/store'
 const mixin = {
   methods: {
     getStreetHistory () {
-      return getFilteredByField(store.state.address, 'street')
+      return getFilteredByField('street')
     },
     getNumberHistory () {
-      return getFilteredByField(store.state.address, 'number')
+      return getFilteredByField('number')
     },
     getNeighborhoodHistory () {
-      return getFilteredByField(store.state.address, 'neighborhood')
+      return getFilteredByField('neighborhood')
     },
     getCepHistory () {
-      return getFilteredByField(store.state.address, 'cep')
+      return getFilteredByField('cep')
     },
     getCityHistory () {
-      return getFilteredByField(store.state.address, 'city')
+      return getFilteredByField('city')
     }
   }
 }
 
-const getFilteredByField = (array, field) => {
+const getFilteredByField = (field) => {
+  const array = store.state.address
   if (!array.length) {
     return []
   }
