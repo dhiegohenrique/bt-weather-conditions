@@ -1,22 +1,11 @@
 <section class="home">
-  <v-row align="center" justify="center" no-gutters>
-    <v-col class="text-center logo" cols="12">
-      <v-img :src="imgRain" :lazy-src="imgRain" aspect-ratio="1" class="grey lighten-2 elevation-3" max-height="300">
-        <template v-slot:placeholder>
-          <v-row class="fill-height ma-0" align="center" justify="center">
-            <v-progress-circular indeterminate color="grey lighten-5" />
-          </v-row>
-        </template>
-        <span>CONDIÇÕES METEOROLÓGICAS</span>
-      </v-img>
-    </v-col>
-  </v-row>
+  <logo />
 
   <address-form @setGeolocation="setGeolocation" @clear="clear" />
 
   <v-row align="center" no-gutters ref="row-weather">
     <v-col class="text-center carousel" cols="12" v-if="weatherConditions.length">
-      <v-carousel hide-delimiters height="auto">
+      <v-carousel hide-delimiters height="auto" v-model="indexWeather">
         <v-carousel-item v-for="(weatherCondition, index) in weatherConditions" :key="'weatherCondition'+index">
           <weather-card :weatherConditions="weatherCondition" :ref="'weatherCondition'+index" />
         </v-carousel-item>

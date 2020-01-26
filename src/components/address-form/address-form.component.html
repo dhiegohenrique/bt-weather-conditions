@@ -21,44 +21,45 @@
     <v-row no-gutters>
       <v-col :cols="isMobile ? '7' : '9'">
         <select-search title="Rua" :maxLength="50" :items="streetHistory" @selectItem="setValue('street', $event)"
-          @search="search" />
+          @search="search" id="street" />
       </v-col>
       <v-col :cols="isMobile ? '5' : '3'">
         <select-search title="Número" maskPattern="#####" :items="numberHistory"
-          @selectItem="setValue('number', $event)" @search="search" />
+          @selectItem="setValue('number', $event)" @search="search" id="number" />
       </v-col>
     </v-row>
     <v-row no-gutters>
       <v-col :cols="isMobile ? '7' : '9'">
         <select-search title="Bairro" :maxLength="50" :items="neighborhoodHistory"
-          @selectItem="setValue('neighborhood', $event)" @search="search" />
+          @selectItem="setValue('neighborhood', $event)" @search="search" id="neighborhood" />
       </v-col>
       <v-col :cols="isMobile ? '5' : '3'">
         <select-search title="CEP" maskPattern="#####-###" :items="cepHistory" @selectItem="setValue('cep', $event)"
-          @search="search" />
+          @search="search" id="cep" />
       </v-col>
     </v-row>
     <v-row no-gutters>
       <v-col :cols="isMobile ? '7' : '9'">
         <select-search title="Cidade" :maxLength="50" :items="cityHistory" @selectItem="setValue('city', $event)"
-          @search="search" />
+          @search="search" id="city" />
       </v-col>
       <v-col :cols="isMobile ? '5' : '3'">
         <select-search title="Estado" maskPattern="SS" :items="stateAcronyms" @selectItem="setValue('state', $event)"
-          @search="search" :hasValidateItem="true" :minCharSearch="1"/>
+          @search="search" :hasValidateItem="true" :minCharSearch="1" id="state" />
       </v-col>
     </v-row>
   </v-form>
 
   <v-row class="bottom-bar">
     <v-col cols="6" class="text-right">
-      <v-btn color="primary" @click="search" :disabled="!street && !number && !neighborhood && !cep && !city && !state">
+      <v-btn color="primary" @click="search" :disabled="!street && !number && !neighborhood && !cep && !city && !state"
+        id="search">
         <v-icon>search</v-icon>
         Buscar
       </v-btn>
     </v-col>
     <v-col cols="6" class="text-left">
-      <v-btn color="error" @click="clear">
+      <v-btn color="error" @click="clear" id="clear">
         <v-icon>clear</v-icon>
         Limpar
       </v-btn>

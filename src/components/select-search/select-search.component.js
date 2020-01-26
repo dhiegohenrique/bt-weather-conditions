@@ -1,8 +1,10 @@
 import { mask as maskDirective } from 'vue-the-mask'
+import ClickOutside from 'vue-click-outside'
 
 export default {
   name: 'select-search',
   directives: {
+    ClickOutside,
     mask: (element, maskOptions) => {
       if (!maskOptions.value) {
         return
@@ -115,6 +117,9 @@ export default {
       }
 
       this.emit()
+    },
+    onClickOutside () {
+      this.showPopup = false
     }
   }
 }
