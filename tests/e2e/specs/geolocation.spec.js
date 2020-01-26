@@ -16,9 +16,9 @@ const address = {
   street: 'bocaiúva',
   number: '2468',
   neighborhood: 'centro',
-  cep: '88015902',
+  cep: '88015-902',
   city: 'florianópolis',
-  state: 'sc'
+  state: 'SC'
 }
 
 module.exports = {
@@ -51,8 +51,6 @@ module.exports = {
             .expect.element(xpath).to.be.visible
         })
       })
-
-
 
     browser
       .perform(() => {
@@ -137,6 +135,25 @@ module.exports = {
       })
   },
 
+  'Should show address suggestions': async function (browser) {
+    const fields = Object.keys(address).map((key) => {
+      const value = address[key]
+      return {
+        xpath: `//*[@id="${key}"]//input`,
+        xpathSuggestion: `//*[@id="${key}"]//div[contains(@class, "v-list") and contains(text(), "${value}")]`,
+        value: value.substring(0, 3)
+      }
+    })
+
+    fields.forEach(async (field) => {
+      await browser.click(field.xpath)
+      await browser.sendKeys(field.xpath, field.value)
+      await browser.waitForElementVisible(field.xpathSuggestion)
+      await browser.click('//*[@id="logo"]')
+      await browser.waitForElementNotPresent(field.xpathSuggestion)
+    })
+  },
+
   'Should change weather conditions when click on next button': !async function (browser) {
     await fillInFields(browser)
     await browser.click(xpathSearch)
@@ -180,8 +197,11 @@ const fillInFields = (browser) => {
       let id = '//*[@id="'
       id = field.substring(field.lastIndexOf(id) + id.length)
       id = id.replace('"]//input', '')
+      const value = address[id]
 
-      await browser.sendKeys(field, address[id])
+      await browser.click(field)
+      await browser.sendKeys(field, value)
+      await browser.waitForValue(field, value)
       if (index === fields.length - 1) {
         resolve()
       }

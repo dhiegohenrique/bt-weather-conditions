@@ -2,7 +2,7 @@
   <v-row no-gutters class="fill-height ma-0">
     <v-col cols="12">
       <v-text-field :label="title" v-model="searchValue" :maxlength="maxLength" @input="filterItem"
-        @keyup.enter="search" @focusout="closePopup" v-mask="maskPattern" hide-details/>
+        @keyup.enter="search" @focusout="closePopup" v-mask="maskPattern" hide-details v-click-outside="onClickOutside"/>
     </v-col>
     <v-col cols="12">
       <v-card :elevation="4" v-if="filteredItems.length && showPopup" @focusout="closePopup">
