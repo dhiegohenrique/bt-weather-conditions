@@ -129,8 +129,15 @@ const validateOnlyNumbers = async (browser, xpath, value, copyAndPaste) => {
           return done()
         }
 
-        browser
-          .setValue(xpath, invalidValue, done)
+        const characters = invalidValue.split('')
+        characters.forEach(async (character, index) => {
+          await browser.sendKeys(xpath, character)
+          await browser.pause(100)
+
+          if (index === characters.length - 1) {
+            done()
+          }
+        })
       })
 
     browser
