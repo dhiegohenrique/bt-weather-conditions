@@ -17,7 +17,7 @@ npm i
 npm run serve
 ```
 
-### Para executar os tests
+### Para executar os testes
 ```
 npm run test:e2e
 ```
