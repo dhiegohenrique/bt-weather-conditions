@@ -21,7 +21,7 @@
     "vue-scrollto": "^2.17.1",
     "vue-the-mask": "^0.11.1",
     "vue-toasted": "^1.1.27",
-    "vuetify": "^2.2.4",
+    "vuetify": "^2.6.10",
     "vuex": "^3.1.2",
     "vuex-persist": "^2.2.0"
   },
